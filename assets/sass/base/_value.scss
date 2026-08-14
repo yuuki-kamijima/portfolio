@@ -1,0 +1,109 @@
+@charset "UTF-8";
+@use "sass:math";
+
+$res1920: 1920;
+$res1900: 1900;
+$res1850: 1850;
+$res1800: 1800;
+$res1700: 1700;
+$res1600: 1600;
+$res1500: 1500;
+$res1550: 1550;
+$res1400: 1400;
+$res1300: 1300;
+$res1200: 1200;
+$res1100: 1100;
+$res1024: 1024;
+$res1000: 1000;
+$res900: 900;
+$res950: 950;
+$res800: 800;
+$res700: 700;
+$res767: 767;
+$res650: 650;
+$res600: 600;
+$res550: 550;
+$res500: 500;
+$res450: 450;
+$res400: 400;
+$res350: 350;
+$res320: 320;
+$res300: 300;
+
+
+@mixin fontsize($size: 17, $base: 17) {
+    font-size: $size + px;
+    font-size: math.div($size, $base) * 1rem;
+}
+
+
+/////////////////////グーグルフォント
+
+
+@mixin f_base{
+    font-family:"游明朝体", "Yu Mincho", YuMincho, "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ ゴシック", sans-serif;
+    font-weight: normal;
+}
+@mixin f_baseB{
+    font-family :'Yu Mincho Demibold','YuMincho Demibold', sans-serif;
+    font-weight: bold;
+}
+
+@mixin f_bell{
+    font-family: "Bellefair", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@mixin f_yugothic{
+    font-family: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+@mixin f-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url(/assets/font/Roboto-Bold.ttf)format("tff");
+}
+
+
+/////////////レスポンシブ/////////////
+
+@mixin res($size){
+    @media only screen and (max-width: $size + "px") {
+        @content;
+    }
+}
+
+@mixin res_min($size){
+    @media only screen and (min-width: $size + "px") {
+        @content;
+    }
+}
+
+
+
+@mixin mb($value: 10px) {
+    margin-bottom: $value;
+
+    @include res($res1400) {
+        margin-bottom: $value * 0.75;
+    }
+
+    @include res($res1024) {
+        margin-bottom: $value * 0.55;
+    }
+
+    @include res($res767) {
+        margin-bottom: $value * 0.4;
+    }
+
+    @include res($res500) {
+        //margin-bottom: $value * 0.25;
+    }
+}
+

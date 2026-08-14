@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About | 上嶋勇己</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <style>
+        /* ページロード時のフェードイン演出（堅牢なCSSアニメーション） */
+        @keyframes pageFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes cinematicFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cinematicBgFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 0.45;
+            }
+        }
+
+        body {
+            animation: pageFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background-color: #d6d6ce;
+        }
+
+        /* ヒーローコンテナのカスタム */
+        .hero-cinematic {
+            background: #d6d6ce;
+        }
+
+        /* 背景コンテナ */
+        .cinematic-bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* 背景画像レイヤー (about用の設定) */
+        .cinematic-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("./assets/img/IMG_8299.jpeg");
+            background-size: cover;
+            background-position: 80% 15%; /* 猫ちゃんと顔が収まる位置 */
+            filter: blur(12px) grayscale(100%) brightness(0.95);
+            animation: cinematicBgFadeIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        /* グラデーションレイヤー */
+        .cinematic-bg-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(214, 214, 206, 0.1) 0%, rgba(214, 214, 206, 0.8) 80%);
+            animation: cinematicBgFadeIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        /* ヒーローコンテンツ */
+        .cinematic-content {
+            position: relative;
+            z-index: 5;
+            max-width: 1000px;
+            padding: 0 4%;
+            box-sizing: border-box;
+        }
+
+        .hero-cinematic h1 {
+            font-size: clamp(2.8rem, 11vw, 8.5rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            animation: cinematicFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .hero-cinematic .subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.25rem);
+            font-weight: 500;
+            color: #4a4a4a;
+            letter-spacing: 0.15em;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: cinematicFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        .hero-cinematic .scroll-indicator {
+            position: absolute;
+            bottom: 60px;
+            z-index: 5;
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            animation: cinematicFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.8s;
+            opacity: 0;
+        }
+
+        /* ==========================================================================
+           案A: Editorial Split スタイル定義
+           ========================================================================== */
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .editorial-left {
+            position: sticky;
+            top: 120px; /* カプセルヘッダーに被らないようトップ位置を調整 */
+        }
+
+        .editorial-image-wrapper {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(26, 26, 26, 0.08);
+            background: #eaeaea;
+        }
+
+        .editorial-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.8s ease, transform 0.8s ease;
+        }
+
+        .editorial-image-wrapper:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        .editorial-meta-box {
+            margin-top: 30px;
+            border-left: 2px solid #1a1a1a;
+            padding-left: 20px;
+        }
+
+        .editorial-meta-box h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .editorial-meta-box p {
+            font-size: 0.9rem;
+            color: #555555;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .editorial-right {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .editorial-bio-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .editorial-bio-text p {
+            margin: 0 0 24px 0;
+        }
+
+        .editorial-bio-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .editorial-section-title {
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .editorial-section-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: rgba(26, 26, 26, 0.15);
+        }
+
+        .editorial-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .editorial-tag {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(26, 26, 26, 0.15);
+            border-radius: 99px;
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #1a1a1a;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .editorial-tag:hover {
+            background: #1a1a1a;
+            color: #d6d6ce;
+            border-color: #1a1a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (max-width: 900px) {
+            .editorial-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .editorial-left {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-capsule">
+        <div class="index_mane">
+            <div class="index_h1">
+                <a href="index.html" class="brand-logo" aria-label="YUUKI KAMIJIMA">
+                    <span class="logo-text">YUUKI KAMIJIMA</span>
+                </a>
+            </div>
+            
+            <!-- 活動ステータス表示 -->
+            <div class="local-status">
+                NAGANO, JP // LOCAL TIME <span id="live-time">00:00:00</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="works.html">Works<span>制作実績</span></a></li>
+                    <li><a href="about.html" class="active-link">About<span>自己紹介</span></a></li>
+                    <li><a href="contact.html">Contact<span>お問い合わせ</span></a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Cinematic Hero Section for About -->
+        <section id="hero" class="hero hero-cinematic">
+            <div class="cinematic-bg-container">
+                <div class="cinematic-bg-img"></div>
+                <div class="cinematic-bg-gradient"></div>
+            </div>
+            <div class="cinematic-content">
+                <h1>About Me.</h1>
+                <p class="subtitle">1997年 長野県生まれ。Webクリエイターとしての歩みと、制作への想い。</p>
+            </div>
+            <div class="scroll-indicator">Scroll</div>
+        </section>
+
+        <!-- Detailed Profile Section (Editorial Split Style) -->
+        <section id="about" style="padding-top: 100px; padding-bottom: 120px;">
+            <div class="editorial-grid">
+                <div class="editorial-left">
+                    <div class="editorial-image-wrapper">
+                        <img src="./assets/img/about.png" alt="上嶋 勇己" onerror="this.src='./assets/img/IMG_8299.jpeg'">
+                    </div>
+                    <div class="editorial-meta-box">
+                        <h2>上嶋 勇己</h2>
+                        <p>1997 / NAGANO, JP / WEB CREATOR & CAT LOVER</p>
+                    </div>
+                </div>
+                
+                <div class="editorial-right">
+                    <div class="editorial-bio-text">
+                        <p class="reveal">1997年、長野県生まれ。</p>
+                        <p class="reveal">高校時代にWebクリエイター科を専攻し、Web制作の基礎を習得しました。在校中から書いたコードが形になる楽しさに没頭する日々を過ごしました。</p>
+                        <p class="reveal">卒業後、知人のフリーランスエンジニアからの誘いをきっかけにプロとしてのキャリアをスタート。現場での厳しい要求に応えながら、実務における技術と知識を積み上げてきました。</p>
+                        <p class="reveal">現在はこれまでの経験を武器に、お客様一人ひとりの課題に寄り添い、想いを形にする制作に励んでいます。</p>
+                    </div>
+
+                    <div>
+                        <div class="editorial-section-title reveal">Stance</div>
+                        <div class="editorial-bio-text">
+                            <p class="reveal"><strong>「作って終わり」にしない。</strong></p>
+                            <p class="reveal">Webサイトは公開してからが本当のスタートです。その先の運用や成果までを見据えた丁寧なヒアリングと、細部まで妥協しない制作スタンスを大切にしています。お客様のビジネスに寄り添うパートナーであることを心がけています。</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="editorial-section-title reveal">Expertise</div>
+                        <div class="editorial-tags reveal">
+                            <span class="editorial-tag">Web Design</span>
+                            <span class="editorial-tag">Responsive Web Design</span>
+                            <span class="editorial-tag">HTML5 & CSS3 Coding</span>
+                            <span class="editorial-tag">SASS / SCSS</span>
+                            <span class="editorial-tag">JavaScript (ES6+)</span>
+                            <span class="editorial-tag">WordPress Integration</span>
+                            <span class="editorial-tag">PHP (Theme Development)</span>
+                            <span class="editorial-tag">SEO Optimization</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="editorial-section-title reveal">Tools</div>
+                        <div class="editorial-tags reveal">
+                            <span class="editorial-tag">VS Code</span>
+                            <span class="editorial-tag">Figma</span>
+                            <span class="editorial-tag">Git & GitHub</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="editorial-section-title reveal">Hobby</div>
+                        <div class="editorial-bio-text">
+                            <p class="reveal">Golf（長野の豊かな自然の中でプレーするのが一番のリフレッシュです）</p>
+                            <p class="reveal">Cats（写真に写っている愛猫と遊ぶ時間が日々の最高の癒やしです）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Optional: Call to Action -->
+        <section class="contact-section reveal">
+            <p>一緒に素晴らしいプロジェクトを作りませんか？</p>
+            <a href="contact.html" class="contact-link">GET IN TOUCH</a>
+
+            <div class="contact-sns-wrapper reveal">
+                <p class="sns-intro">SNSからもお気軽にお問い合わせください</p>
+                <div class="contact-sns-buttons">
+                    <a href="https://www.instagram.com/yuuki_kamijima?igsh=ZGRrZzVpYnpqcHBj&utm_source=qr" target="_blank" rel="noopener noreferrer" class="sns-btn insta-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://lin.ee/t8U09jC" target="_blank" rel="noopener noreferrer" class="sns-btn line-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5c0-4.142-4.037-7.5-9-7.5s-9 3.358-9 7.5c0 3.704 3.205 6.814 7.548 7.398.293.064.693.193.793.443.1.25.065.64.032.894-.07.54-.253 2.164-.286 2.457-.05.443.204.4.43.264.227-.136 3.655-2.207 5.124-3.5a10.02 10.02 0 0 0 4.359-8.456z"/>
+                        </svg>
+                        <span>LINE</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p class="copyright">&copy; 2026 Portfolio. Built with passion.</p>
+        <div class="footer-sns">
+            <a href="https://www.instagram.com/yuuki_kamijima?igsh=ZGRrZzVpYnpqcHBj&utm_source=qr" target="_blank" rel="noopener noreferrer" class="sns-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+            </a>
+            <a href="https://lin.ee/t8U09jC" target="_blank" rel="noopener noreferrer" class="sns-link" aria-label="LINE">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5c0-4.142-4.037-7.5-9-7.5s-9 3.358-9 7.5c0 3.704 3.205 6.814 7.548 7.398.293.064.693.193.793.443.1.25.065.64.032.894-.07.54-.253 2.164-.286 2.457-.05.443.204.4.43.264.227-.136 3.655-2.207 5.124-3.5a10.02 10.02 0 0 0 4.359-8.456z"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const header = document.querySelector('header');
+        const navLinks = document.querySelectorAll('nav a');
+
+        menuToggle.addEventListener('click', () => {
+            header.classList.toggle('nav-open');
+            document.body.style.overflow = header.classList.contains('nav-open') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                header.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Intersection Observer for reveal animations
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // リアルタイム時刻更新（長野）
+        function updateTime() {
+            const timeSpan = document.getElementById('live-time');
+            if (!timeSpan) return;
+            const now = new Date();
+            const options = {
+                timeZone: 'Asia/Tokyo',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            timeSpan.textContent = now.toLocaleTimeString('ja-JP', options);
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // スクロール検知によるヘッダー縮小制御
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 80) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

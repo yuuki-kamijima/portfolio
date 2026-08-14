@@ -1,0 +1,313 @@
+@import "../base/variables";
+@import "../base/value";
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4%;
+  background: rgba($bg-color, 0.8);
+  backdrop-filter: blur(15px);
+  z-index: 1000; /* 最前面に固定 */
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @include res_min(768) {
+    top: 20px;
+    background: transparent;
+    backdrop-filter: none;
+    height: auto;
+    padding: 0;
+  }
+
+  @include res($res767) {
+    height: 60px;
+  }
+
+  // Effect 01: スクロール時にカプセルをスマートに縮小
+  &.scrolled {
+    @include res_min(768) {
+      .index_mane {
+        max-width: 650px;
+        height: 52px;
+        padding: 0 28px;
+        background: rgba(26, 26, 26, 0.08);
+        border-color: rgba(26, 26, 26, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      }
+
+      .index_h1 .brand-logo .logo-text {
+        font-size: 11px;
+        letter-spacing: 0.28em;
+      }
+
+      nav ul {
+        gap: 28px;
+      }
+
+      nav ul li a {
+        font-size: 9px;
+      }
+
+      // 縮小時は時刻表示をフェードアウト
+      .local-status {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+      }
+    }
+  }
+
+  .index_mane {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+    @include res_min(768) {
+      max-width: 820px;
+      height: 60px;
+      margin: 0 auto;
+      padding: 0 40px;
+      border-radius: 99px;
+      background: rgba(26, 26, 26, 0.06); /* 非常に薄い黒 */
+      border: 1px solid rgba(26, 26, 26, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    }
+  }
+
+  // Effect 03: 活動ステータス (長野の現在時刻)
+  .local-status {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: $text-color;
+    opacity: 0.45;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+    @include res($res767) {
+      display: none;
+    }
+  }
+
+  .index_h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+      color: $text-color;
+
+      .logo-text {
+        font-size: clamp(11px, 1.5vw, 13px);
+        font-weight: 400;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        display: inline-block;
+
+        @include res_min(768) {
+          font-size: 11px;
+        }
+      }
+
+      svg {
+        width: 48px;
+        height: 48px;
+        display: block;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        
+        @include res($res767) {
+          width: 38px;
+          height: 38px;
+        }
+
+        .grid-line {
+          stroke: rgba($text-color, 0.12);
+          stroke-width: 0.6px;
+          transition: stroke 0.3s ease;
+        }
+
+        .main-line {
+          stroke: $text-color;
+          stroke-width: 6.5px;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          transition: stroke 0.3s ease;
+        }
+
+        .accent-line {
+          stroke: #c59b27;
+          stroke-width: 6.5px;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          transition: stroke 0.3s ease;
+        }
+      }
+
+      &:hover {
+        opacity: 0.8;
+        
+        svg {
+          transform: scale(1.08);
+        }
+      }
+    }
+  }
+
+  nav {
+    @include res($res767) {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100vh;
+      background: $bg-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-100%);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+
+    ul {
+      display: flex;
+      gap: 40px;
+
+      @include res($res767) {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
+
+      li a {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+        @include res_min(768) {
+          font-size: 10px;
+        }
+        
+        @include res($res767) {
+          font-size: 1.5rem;
+          gap: 10px;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -15px;
+          left: 50%;
+          width: 0;
+          height: 1px;
+          background: $text-color;
+          transition: width 0.3s ease;
+          transform: translateX(-50%);
+
+          @include res_min(768) {
+            display: none;
+          }
+        }
+
+        &:hover::after {
+          width: 20px;
+        }
+
+        span {
+          display: block;
+          font-size: 0.6rem;
+          text-transform: none;
+          opacity: 0.6;
+          letter-spacing: 0.05em;
+          font-weight: 400;
+
+          @include res_min(768) {
+            display: none;
+          }
+
+          @include res($res767) {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+
+    @include res($res767) {
+      display: block;
+    }
+
+    span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background-color: $text-color;
+      margin: 8px 0;
+      transition: $transition-fast;
+    }
+  }
+
+  &.nav-open {
+    nav {
+      transform: translateY(0);
+    }
+    .hamburger {
+      span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+      span:nth-child(2) { opacity: 0; }
+      span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+    }
+  }
+
+  // Capsule header active state
+  &.header-capsule {
+    nav ul li a.active-link {
+      background: rgba(26, 26, 26, 0.06);
+      border: 1px solid rgba(26, 26, 26, 0.1);
+      border-radius: 99px;
+      padding: 6px 16px;
+      margin: -6px -16px;
+      color: #1a1a1a;
+      font-weight: 700;
+
+      @include res($res767) {
+        background: rgba(26, 26, 26, 0.08);
+        padding: 10px 24px;
+        margin: 0;
+      }
+    }
+  }
+}

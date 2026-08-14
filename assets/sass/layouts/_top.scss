@@ -1,0 +1,38 @@
+@charset "UTF-8";
+@use "../base/value" as v;
+
+
+
+header{
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+
+.index_mane{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    .index_h1{
+        width: 40%;
+        padding-left: 50px;
+        height: auto;
+        font-size: 20px;
+    }
+    .index_mane{
+        width: 60%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 15px;
+        ul{
+            display: flex;
+            padding-left: 8px;
+            li{
+                margin-left: 40px;
+            }
+        }
+
+    }
+}
+}

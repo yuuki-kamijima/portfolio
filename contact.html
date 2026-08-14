@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact | 上嶋勇己</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <style>
+        /* ページロード時のフェードイン演出 */
+        @keyframes pageFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        body {
+            animation: pageFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-capsule">
+        <div class="index_mane">
+            <div class="index_h1">
+                <a href="index.html" class="brand-logo" aria-label="YUUKI KAMIJIMA">
+                    <span class="logo-text">YUUKI KAMIJIMA</span>
+                </a>
+            </div>
+            
+            <!-- 活動ステータス表示 -->
+            <div class="local-status">
+                NAGANO, JP // LOCAL TIME <span id="live-time">00:00:00</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="works.html">Works<span>制作実績</span></a></li>
+                    <li><a href="about.html">About<span>自己紹介</span></a></li>
+                    <li><a href="contact.html" class="active-link">Contact<span>お問い合わせ</span></a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main style="padding-top: 100px;">
+        <section id="contact" class="contact-section">
+            <h2 class="section-title reveal">Contact</h2>
+            <p class="reveal">プロジェクトのご相談はこちらから</p>
+            <form action="https://api.web3forms.com/submit" method="POST" class="contact-form reveal">
+                <!-- Web3Formsのアクセスキー -->
+                <input type="hidden" name="access_key" value="3c76bc14-597a-4462-9670-914e5bf3cdb9">
+                <!-- スパム防止用のハニーポット -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                <div class="form-group">
+                    <label for="name">Name / お名前</label>
+                    <input type="text" name="name" id="name" required placeholder="Your Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email / メールアドレス</label>
+                    <input type="email" name="email" id="email" required placeholder="email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message / お問い合わせ内容</label>
+                    <textarea name="message" id="message" rows="6" required placeholder="How can we help you?"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+
+            <div class="contact-sns-wrapper reveal">
+                <p class="sns-intro">SNSからもお気軽にお問い合わせください</p>
+                <div class="contact-sns-buttons">
+                    <a href="https://www.instagram.com/yuuki_kamijima?igsh=ZGRrZzVpYnpqcHBj&utm_source=qr" target="_blank" rel="noopener noreferrer" class="sns-btn insta-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://lin.ee/t8U09jC" target="_blank" rel="noopener noreferrer" class="sns-btn line-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5c0-4.142-4.037-7.5-9-7.5s-9 3.358-9 7.5c0 3.704 3.205 6.814 7.548 7.398.293.064.693.193.793.443.1.25.065.64.032.894-.07.54-.253 2.164-.286 2.457-.05.443.204.4.43.264.227-.136 3.655-2.207 5.124-3.5a10.02 10.02 0 0 0 4.359-8.456z"/>
+                        </svg>
+                        <span>LINE</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p class="copyright">&copy; 2026 Portfolio. Built with passion.</p>
+        <div class="footer-sns">
+            <a href="https://www.instagram.com/yuuki_kamijima?igsh=ZGRrZzVpYnpqcHBj&utm_source=qr" target="_blank" rel="noopener noreferrer" class="sns-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+            </a>
+            <a href="https://lin.ee/t8U09jC" target="_blank" rel="noopener noreferrer" class="sns-link" aria-label="LINE">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5c0-4.142-4.037-7.5-9-7.5s-9 3.358-9 7.5c0 3.704 3.205 6.814 7.548 7.398.293.064.693.193.793.443.1.25.065.64.032.894-.07.54-.253 2.164-.286 2.457-.05.443.204.4.43.264.227-.136 3.655-2.207 5.124-3.5a10.02 10.02 0 0 0 4.359-8.456z"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const header = document.querySelector('header');
+        menuToggle.addEventListener('click', () => {
+            header.classList.toggle('nav-open');
+        });
+
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+        const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // リアルタイム時刻更新（長野）
+        function updateTime() {
+            const timeSpan = document.getElementById('live-time');
+            if (!timeSpan) return;
+            const now = new Date();
+            const options = {
+                timeZone: 'Asia/Tokyo',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            timeSpan.textContent = now.toLocaleTimeString('ja-JP', options);
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // スクロール検知によるヘッダー縮小制御
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 80) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

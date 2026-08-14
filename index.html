@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no">
+    <title>上嶋勇己 | Kamijima Yuuki</title>
+    <meta name="description" content="Premium minimalist portfolio design.">
+    <meta name="google-site-verification" content="Vp7p3Kaow3dZbtd7nlTeVh991zKUoJOaS_bDQoq8Uzw" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <style>
+        /* ==========================================================================
+           Opening Loader & Minimalist Logo Styles
+           ========================================================================== */
+        
+        /* Disable scroll while loading */
+        body:not(.loaded) {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Opening Loader Container */
+        .opening-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #0f0f0f;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        /* Slide loader upwards when finished */
+        .opening-loader.fade-out {
+            transform: translateY(-100%);
+        }
+
+        /* Content inside Loader */
+        .loader-content {
+            text-align: center;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: loaderContentFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes loaderContentFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loader Logo */
+        .loader-logo {
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 0.4em;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            color: #e0e0e0;
+            font-family: "Inter", "Noto Sans JP", sans-serif;
+        }
+
+        /* Progress Area */
+        .loader-progress {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .loader-bar-bg {
+            width: 160px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: #ffffff;
+            transition: width 0.05s linear;
+        }
+
+        .loader-percent {
+            font-size: 9px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: #888888;
+            font-family: "Inter", sans-serif;
+        }
+
+        .loader-percent::after {
+            content: "%";
+        }
+
+        /* Pause main content animations until loaded */
+        .hero h1,
+        .hero .subtitle,
+        .hero .scroll-indicator,
+        .hero .hero-bg {
+            animation-play-state: paused !important;
+        }
+
+        /* Play animations when loaded */
+        body.loaded .hero h1,
+        body.loaded .hero .subtitle,
+        body.loaded .hero .scroll-indicator,
+        body.loaded .hero .hero-bg {
+            animation-play-state: running !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Opening Loader -->
+    <div id="opening-loader" class="opening-loader">
+        <script>
+            if (sessionStorage.getItem('visited')) {
+                document.getElementById('opening-loader').style.display = 'none';
+                document.body.classList.add('loaded');
+            }
+        </script>
+        <div class="loader-content">
+            <div class="loader-logo">YUUKI KAMIJIMA</div>
+            <div class="loader-progress">
+                <div class="loader-bar-bg">
+                    <div class="loader-bar-fill" id="loader-bar-fill"></div>
+                </div>
+                <div class="loader-percent" id="loader-percent">00</div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="index_mane">
+            <div class="index_h1">
+                <a href="index.html" class="brand-logo" aria-label="YUUKI KAMIJIMA">
+                    <span class="logo-text">YUUKI KAMIJIMA</span>
+                </a>
+            </div>
+            
+            <!-- 活動ステータス表示 -->
+            <div class="local-status">
+                NAGANO, JP // LOCAL TIME <span id="live-time">00:00:00</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="works.html">Works<span>制作実績</span></a></li>
+                    <li><a href="about.html">About<span>自己紹介</span></a></li>
+                    <li><a href="contact.html">Contact<span>お問い合わせ</span></a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-bg index-hero-bg"></div>
+            <h1>Creative<br>Designer.</h1>
+            <p class="subtitle">見やすさと、伝わりやすさを、デザインの力で。</p>
+            <div class="scroll-indicator">Scroll</div>
+        </section>
+
+        <section id="works">
+            <h2 class="section-title reveal">Selected Works</h2>
+            <div class="works-slider">
+                <!-- 01: 農家のホームページ -->
+                <a href="works.html#work-farmer" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/azusa.png" alt="農家のホームページ" class="pos-bottom" onerror="this.src='./assets/img/coming_soon1.png'">
+                        <div class="hover-mask">
+                            <h3>農家のホームページ</h3>
+                            <p>Web Design & Coding</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 02: ブリーダーのホームページ -->
+                <a href="works.html#work-breeder" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/wah.png" alt="ブリーダーのホームページ" onerror="this.src='./assets/img/coming_soon2.png'">
+                        <div class="hover-mask">
+                            <h3>ブリーダーのホームページ</h3>
+                            <p>Web Design & WordPress</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 03: カフェのホームページ -->
+                <a href="works.html#work-cafe" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/waffle_menu.png" alt="カフェのホームページ" onerror="this.src='./assets/img/coming_soon3.png'">
+                        <div class="hover-mask">
+                            <h3>カフェのホームページ</h3>
+                            <p>Web Design & Instagram Integration</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 04: 工場のホームページ -->
+                <a href="works.html#work-factory" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/factory_demo.png" alt="工場のホームページ" onerror="this.src='./assets/img/coming_soon4.png'">
+                        <div class="hover-mask">
+                            <h3>工場のホームページ</h3>
+                            <p>Web Design & Coding</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 05: 美容室のホームページ -->
+                <a href="works.html#work-hairsalon" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/hair_salon_demo.png" alt="美容室のホームページ" onerror="this.src='./assets/img/coming_soon1.png'">
+                        <div class="hover-mask">
+                            <h3>美容室のホームページ</h3>
+                            <p>Web Design & Smooth Animation</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 06: 美容クリニックのホームページ -->
+                <a href="works.html#work-estheticsalon" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/esthetic_salon_demo.png" alt="美容クリニックのホームページ" onerror="this.src='./assets/img/coming_soon2.png'">
+                        <div class="hover-mask">
+                            <h3>美容クリニックのホームページ</h3>
+                            <p>Web Design & Coding</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 07: LPの紹介ページ -->
+                <a href="works.html#work-lp" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/lp_demo.png" alt="Webスクールの紹介LP" onerror="this.src='./assets/img/coming_soon3.png'">
+                        <div class="hover-mask">
+                            <h3>Webスクールの紹介LP</h3>
+                            <p>Landing Page Design & Coding</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 【後日さらに追加用のテンプレート】
+                     将来、新しい実績を追加する場合は、以下のコメントアウトを解除してご利用ください。 -->
+                <!--
+                <a href="works.html#work-new" class="work-item reveal">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/coming_soon4.png" alt="新規プロジェクト" onerror="this.src='./assets/img/coming_soon4.png'">
+                        <div class="hover-mask">
+                            <h3>新プロジェクト</h3>
+                            <p>Web Design & Coding</p>
+                        </div>
+                    </div>
+                </a>
+                -->
+            </div>
+            <div class="view-more reveal">
+                <a href="works.html" class="more-btn">もっとみる</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title reveal">About</h2>
+            <div class="about-style-a reveal">
+                <div class="profile-character-bg">
+                    <div class="large-char">ABOUT</div>
+                    <div class="profile-summary">
+                        <h3>上嶋 勇己</h3>
+                        <p>1997 / Nagano / Web Creator</p>
+                    </div>
+                </div>
+                <div class="about-details-content">
+                    <p class="profile-description">
+                        長野県生まれ。高校時代にWebクリエイター科で制作を学び、その後のフリーランスとの活動を通じて実務キャリアをスタート。
+                        基礎に基づいた確かな技術と、現場で培った柔軟な対応力で、価値のあるWebサイトを制作します。
+                    </p>
+                    
+                    <div class="skills-container">
+                        <div class="skill-group-title">Expertise // 担当領域</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Web Design</span>
+                            <span class="skill-tag">Responsive Web Design</span>
+                            <span class="skill-tag">HTML5 & CSS3 Coding</span>
+                            <span class="skill-tag">SASS / SCSS</span>
+                            <span class="skill-tag">JavaScript (ES6+)</span>
+                            <span class="skill-tag">WordPress Integration</span>
+                            <span class="skill-tag">PHP (Theme Development)</span>
+                            <span class="skill-tag">SEO Optimization</span>
+                        </div>
+
+                        <div class="skill-group-title">Tools & Future Tech // 使用ツール・技術</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Figma</span>
+                            <span class="skill-tag">Git & GitHub</span>
+                            <span class="skill-tag">npm & Node.js</span>
+                            <span class="skill-tag">Vite</span>
+                            <span class="skill-tag">WordPress</span>
+                            <span class="skill-tag">PHP</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Next.js</span>
+                            <span class="skill-tag">Photoshop</span>
+                            <span class="skill-tag">Illustrator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more reveal">
+                <a href="about.html" class="more-btn">もっとみる</a>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <!-- <h2 class="section-title reveal">Contact</h2> -->
+            <p class="reveal">プロジェクトのご相談はこちらから</p>
+            <a href="contact.html" class="contact-link reveal">SAY HELLO</a>
+
+            <div class="contact-sns-wrapper reveal">
+                <p class="sns-intro">SNSからもお気軽にお問い合わせください</p>
+                <div class="contact-sns-buttons">
+                    <a href="https://www.instagram.com/yuuki_kamijima?igsh=ZGRrZzVpYnpqcHBj&utm_source=qr"
+                        target="_blank" rel="noopener noreferrer" class="sns-btn insta-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://lin.ee/t8U09jC" target="_blank" rel="noopener noreferrer" class="sns-btn line-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 11.5c0-4.142-4.037-7.5-9-7.5s-9 3.358-9 7.5c0 3.704 3.205 6.814 7.548 7.398.293.064.693.193.793.443.1.25.065.64.032.894-.07.54-.253 2.164-.286 2.457-.05.443.204.4.43.264.227-.136 3.655-2.207 5.124-3.5a10.02 10.02 0 0 0 4.359-8.456z" />
+                        </svg>
+                        <span>LINE</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="view-more reveal" style="margin-top: 40px;">
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p class="copyright">&copy; 2026 Portfolio. Built with passion.</p>
+        <div class="footer-sns">
+            <a href="https://www.instagram.com/yuuki_kamijima?igsh=ZGRrZzVpYnpqcHBj&utm_source=qr" target="_blank"
+                rel="noopener noreferrer" class="sns-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+            </a>
+            <a href="https://lin.ee/t8U09jC" target="_blank" rel="noopener noreferrer" class="sns-link"
+                aria-label="LINE">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                        d="M21 11.5c0-4.142-4.037-7.5-9-7.5s-9 3.358-9 7.5c0 3.704 3.205 6.814 7.548 7.398.293.064.693.193.793.443.1.25.065.64.032.894-.07.54-.253 2.164-.286 2.457-.05.443.204.4.43.264.227-.136 3.655-2.207 5.124-3.5a10.02 10.02 0 0 0 4.359-8.456z" />
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const header = document.querySelector('header');
+        const navLinks = document.querySelectorAll('nav a');
+
+        menuToggle.addEventListener('click', () => {
+            header.classList.toggle('nav-open');
+            document.body.style.overflow = header.classList.contains('nav-open') ? 'hidden' : '';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                header.classList.remove('nav-open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Intersection Observer for reveal animations
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Opening Loader Logic
+        window.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('opening-loader');
+            const percentText = document.getElementById('loader-percent');
+            const barFill = document.getElementById('loader-bar-fill');
+            const content = document.querySelector('.loader-content');
+
+            if (!loader || !percentText || !barFill) return;
+
+            // すでにセッション内で訪問済みの場合は即座に終了（ちらつき防止用スクリプトのバックアップ処理）
+            if (sessionStorage.getItem('visited')) {
+                loader.style.display = 'none';
+                document.body.classList.add('loaded');
+                return;
+            }
+
+            let count = 0;
+            const targetDuration = 1600; // ローディングにかける目標時間（ミリ秒）
+            const interval = 16; // 約60fps
+            const step = 100 / (targetDuration / interval);
+
+            const timer = setInterval(() => {
+                count += step;
+                if (count >= 100) {
+                    count = 100;
+                    clearInterval(timer);
+                    percentText.textContent = '100';
+                    barFill.style.width = '100%';
+                    
+                    // セッションストレージに訪問フラグを保存
+                    sessionStorage.setItem('visited', 'true');
+                    
+                    // フェードアウトとスライドアウトの実行
+                    setTimeout(() => {
+                        content.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                        content.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            loader.classList.add('fade-out');
+                            document.body.classList.add('loaded');
+                        }, 400);
+                    }, 200);
+                } else {
+                    const roundedCount = Math.floor(count);
+                    percentText.textContent = String(roundedCount).padStart(2, '0');
+                    barFill.style.width = roundedCount + '%';
+                }
+            }, interval);
+        });
+
+        // リアルタイム時刻更新（長野）
+        function updateTime() {
+            const timeSpan = document.getElementById('live-time');
+            if (!timeSpan) return;
+            const now = new Date();
+            const options = {
+                timeZone: 'Asia/Tokyo',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            timeSpan.textContent = now.toLocaleTimeString('ja-JP', options);
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // スクロール検知によるヘッダー縮小制御
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 80) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

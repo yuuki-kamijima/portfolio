@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>AURA HAIR SALON | オーラ ヘアサロン</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #FFFFFF;
+            --bg-pearly: #F4F7F9; /* 清潔感のあるアイスブルーグレー */
+            --text-dark: #2C3E50; /* 柔らかなダークネイビー */
+            --text-muted: #7F8C8D;
+            --primary-accent: #A3C6C4; /* ダスティミント */
+            --border-color: #E2E8F0;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: var(--font-sans);
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- 1. Opening Loading Animation --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        #loader.loaded {
+            transform: translateY(-100%);
+        }
+
+        .loader-logo {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            color: var(--text-dark);
+            opacity: 0;
+            animation: loaderTextIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes loaderTextIn {
+            0% { opacity: 0; letter-spacing: 0.2em; transform: translateY(10px); }
+            100% { opacity: 1; letter-spacing: 0.4em; transform: translateY(0); }
+        }
+
+        /* --- 2. Scroll Progress Bar --- */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background-color: var(--primary-accent);
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+        }
+
+        /* --- 3. Scroll Reveal Animations (Enhanced) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(45px);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
+
+        /* Left and Right Slide Reveal */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- 4. Image Reveal Mask Effect --- */
+        .reveal-mask-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .reveal-mask-container img {
+            opacity: 0;
+            transform: scale(1.08);
+            transition: opacity 0.8s 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-mask-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-accent);
+            transform: translateX(-101%);
+            z-index: 2;
+        }
+
+        .reveal-mask-container.active img {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .reveal-mask-container.active::after {
+            animation: slideRevealMask 1.2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+        }
+
+        @keyframes slideRevealMask {
+            0% { transform: translateX(-101%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(101%); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 35px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: transparent;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 1px solid transparent;
+        }
+
+        header.scrolled {
+            padding: 18px 8%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            color: var(--text-dark);
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.02);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        nav a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--primary-accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--primary-accent);
+        }
+
+        /* Button hover animation: Slide background fill */
+        .btn-reserve {
+            background-color: var(--text-dark);
+            color: #ffffff !important;
+            padding: 11px 26px;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: color 0.4s ease, transform 0.3s ease;
+            border: 1px solid var(--text-dark);
+        }
+
+        .btn-reserve::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-accent);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+
+        .btn-reserve:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-reserve:hover {
+            color: #ffffff !important;
+            transform: translateY(-2px);
+            border-color: var(--primary-accent);
+        }
+
+        /* Hero with Ken Burns Effect */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.75) contrast(1.02);
+            /* Ken Burns Effect (Continuous slow zoom) */
+            animation: kenBurns 18s linear infinite alternate;
+        }
+
+        @keyframes kenBurns {
+            0% { transform: scale(1.03) translateY(0); }
+            100% { transform: scale(1.12) translateY(-10px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: #ffffff;
+            max-width: 900px;
+            padding: 0 4%;
+        }
+
+        .hero-content span {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-style: italic;
+            letter-spacing: 0.25em;
+            color: var(--primary-accent);
+            display: block;
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFade 1.4s 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            line-height: 1.28;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFade 1.4s 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-content p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 45px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFade 1.4s 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-content .btn-outline {
+            display: inline-block;
+            padding: 16px 36px;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFade 1.4s 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-content .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+
+        .hero-content .btn-outline:hover::before {
+            transform: translateX(100%);
+        }
+
+        .hero-content .btn-outline:hover {
+            color: var(--text-dark);
+            border-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Section Layout Common */
+        section {
+            padding: 140px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .section-header span {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--primary-accent);
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            position: relative;
+            padding-bottom: 25px;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 1px;
+            background-color: var(--text-dark);
+            opacity: 0.3;
+        }
+
+        /* Concept / Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-pearly);
+            padding: 50px 40px;
+            border-radius: 0;
+            border: 1px solid var(--border-color);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(44, 62, 80, 0.05);
+            background-color: #ffffff;
+            border-color: var(--primary-accent);
+        }
+
+        .feature-icon-text {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-style: italic;
+            color: var(--primary-accent);
+            margin-bottom: 30px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            letter-spacing: 0.08em;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* Commitment Focus */
+        .focus-section {
+            background-color: var(--bg-pearly);
+            max-width: 100%;
+            padding: 140px 8%;
+        }
+
+        .focus-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .focus-text h3 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .focus-text p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        /* Style Gallery with Tabs */
+        .style-tabs {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .tab-btn {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--text-dark);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-accent);
+            transition: width 0.3s ease;
+        }
+
+        .tab-btn.active::after {
+            width: 30px;
+        }
+
+        .gallery-container {
+            position: relative;
+            min-height: 400px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-grid.fade-out {
+            opacity: 0;
+        }
+
+        .style-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .style-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+        }
+
+        .style-img-wrapper {
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            background-color: #eaeaea;
+        }
+
+        .style-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .style-card:hover .style-img-wrapper img {
+            transform: scale(1.06);
+        }
+
+        .style-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .style-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .style-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Menu & Pricing */
+        .menu-layout {
+            background-color: var(--bg-pearly);
+            max-width: 100%;
+            padding: 140px 8%;
+        }
+
+        .menu-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 80px 60px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.02);
+        }
+
+        .price-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .price-item {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid #F1F4F6;
+            padding-bottom: 30px;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .price-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .price-main h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .price-cost {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .price-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Access Info (No detailed address) */
+        .access-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .access-info h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table td {
+            padding: 15px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .info-table td:first-child {
+            width: 120px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .map-box {
+            width: 100%;
+            height: 350px;
+            background-color: var(--bg-pearly);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Back to works Bar */
+        .back-bar {
+            background-color: var(--bg-pearly);
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 14px 40px;
+            border: 1px solid var(--text-dark);
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+        }
+
+        .btn-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--text-dark);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+
+        .btn-back:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-back:hover {
+            color: #ffffff !important;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: #1A252F;
+            color: #BDC3C7;
+            padding: 40px 8%;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .features-grid, .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .focus-container, .access-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            header {
+                padding: 20px 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .features-grid, .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-container {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Opening Loader -->
+    <div id="loader">
+        <div class="loader-logo">A U R A</div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progress-bar" id="scroll-progress"></div>
+
+    <header id="header">
+        <div class="brand-logo">AURA</div>
+        <nav>
+            <ul>
+                <li><a href="#concept">Concept</a></li>
+                <li><a href="#style">Style</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#access">Access</a></li>
+                <li><a href="#" class="btn-reserve">Web Reservation</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg" id="hero-bg">
+                <img src="../../assets/img/hair_salon_demo.png" alt="AURA Salon Premium Interior">
+            </div>
+            <div class="hero-content">
+                <span>Personal Hair Salon Aura</span>
+                <h1>髪に透明感を、<br>毎日に心地よさを。</h1>
+                <p>一人ひとりの骨格・髪質にあわせた「似合わせカット」と、極限までダメージを抑えた「透明感カラー」で、あなた本来の輝きを引き出します。</p>
+                <a href="#menu" class="btn-outline">Menu & Price</a>
+            </div>
+        </section>
+
+        <!-- Concept / Features -->
+        <section id="concept">
+            <div class="section-header reveal">
+                <span>Our Concept</span>
+                <h2>オーラのこだわり</h2>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Card 1 -->
+                <div class="feature-card reveal reveal-left reveal-delay-1">
+                    <div class="feature-icon-text">01</div>
+                    <h3>パーソナル似合わせカット</h3>
+                    <p>骨格や毛流れ、癖を徹底分析。ご自宅での再現性の高さと、365日いつでもお洒落を楽しめるデザイン性の両立をご提案します。</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="feature-card reveal reveal-delay-2">
+                    <div class="feature-icon-text">02</div>
+                    <h3>ダメージレス透明感カラー</h3>
+                    <p>厳選した約3000種類の色素から最適なプロファイルを調合。髪の負担を最小限に抑えながら、光に透けるような柔らかな質感を表現します。</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="feature-card reveal reveal-right reveal-delay-3">
+                    <div class="feature-icon-text">03</div>
+                    <h3>AI髪質改善トリートメント</h3>
+                    <p>最新のテクノロジーを活用したヘアエステ。乾燥やダメージのレベルに合わせて12種類の毛髪補修成分からオーダーメイドケアを行います。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Focus Section with Reveal Mask -->
+        <section class="focus-section">
+            <div class="focus-container">
+                <!-- 画像座布団スライドエフェクト適用箇所 -->
+                <div class="reveal-mask-container reveal" id="focus-reveal-image">
+                    <img src="../../assets/img/hair_salon_demo.png" alt="AURA Treatment Room">
+                </div>
+                <div class="focus-text reveal reveal-right">
+                    <div class="section-title" style="text-align: left; margin-bottom: 25px;">
+                        <span style="font-family: var(--font-serif); color: var(--primary-accent); font-style: italic; display: block; margin-bottom: 10px;">Our Philosophy</span>
+                        <h2 style="font-size: 2rem; font-weight: 300; padding: 0;">お客様と向き合う、特別なご相談。</h2>
+                    </div>
+                    <h3>「伝えづらい」を「伝えやすい」に。</h3>
+                    <p>私たちは、何よりも丁寧なカウンセリングを大切にしています。お悩みを打ち明けやすく、理想とするニュアンスを引き出すために、お一人ずつの時間をしっかりと確保。</p>
+                    <p>ライフスタイルに自然と馴染みつつ、過去最高のヘアスタイルに更新し続けるため、プロならではのアドバイスとご提案を共に重ねていきます。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Style Gallery with Interactive Tabs -->
+        <section id="style">
+            <div class="section-header reveal">
+                <span>Styles Gallery</span>
+                <h2>ヘアカタログ</h2>
+            </div>
+
+            <!-- タブ切り替えメニュー -->
+            <ul class="style-tabs reveal">
+                <li><button class="tab-btn active" data-style="all">All</button></li>
+                <li><button class="tab-btn" data-style="short">Short</button></li>
+                <li><button class="tab-btn" data-style="bob">Bob</button></li>
+                <li><button class="tab-btn" data-style="long">Medium & Long</button></li>
+            </ul>
+
+            <!-- ギャラリー本体 -->
+            <div class="gallery-container reveal">
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Style Item 1 -->
+                    <div class="style-card" data-style="bob">
+                        <div class="style-img-wrapper">
+                            <img src="../../assets/img/hair_salon_demo.png" alt="Medium Bob">
+                        </div>
+                        <div class="style-info">
+                            <h4>Medium Bob</h4>
+                            <p>抜け感のあるクリーンボブ</p>
+                        </div>
+                    </div>
+                    <!-- Style Item 2 -->
+                    <div class="style-card" data-style="short">
+                        <div class="style-img-wrapper">
+                            <img src="../../assets/img/hair_salon_demo.png" alt="Short Layer" style="filter: sepia(10%) brightness(0.95);">
+                        </div>
+                        <div class="style-info">
+                            <h4>Short Layer</h4>
+                            <p>軽やかで立体的なハンサムショート</p>
+                        </div>
+                    </div>
+                    <!-- Style Item 3 -->
+                    <div class="style-card" data-style="long">
+                        <div class="style-img-wrapper">
+                            <img src="../../assets/img/hair_salon_demo.png" alt="Nuance Wave" style="filter: contrast(1.05);">
+                        </div>
+                        <div class="style-info">
+                            <h4>Nuance Wave</h4>
+                            <p>透明感のあるニュアンスウェーブ</p>
+                        </div>
+                    </div>
+                    <!-- Style Item 4 -->
+                    <div class="style-card" data-style="long">
+                        <div class="style-img-wrapper">
+                            <img src="../../assets/img/hair_salon_demo.png" alt="Silky Straight" style="filter: grayscale(5%);">
+                        </div>
+                        <div class="style-info">
+                            <h4>Silky Straight</h4>
+                            <p>うるおい際立つストレートロング</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu & Price -->
+        <section id="menu" class="menu-layout">
+            <div class="section-header reveal">
+                <span>Menu & Pricing</span>
+                <h2>施術メニュー</h2>
+            </div>
+            
+            <div class="menu-container reveal">
+                <div class="price-list">
+                    <div class="price-item">
+                        <div class="price-main">
+                            <h3>似合わせカット</h3>
+                            <span class="price-cost">¥5,500</span>
+                        </div>
+                        <p class="price-desc">シャンプー・ブロー込。お悩みや骨格を丁寧に見極めて再現性の高いカットを施します。</p>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-main">
+                            <h3>ダメージレスカラー</h3>
+                            <span class="price-cost">¥7,000 〜</span>
+                        </div>
+                        <p class="price-desc">厳選したカラー剤とパーソナル調合で、艶やかで透き通るような発色を実現します。</p>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-main">
+                            <h3>デザインパーマ</h3>
+                            <span class="price-cost">¥8,000 〜</span>
+                        </div>
+                        <p class="price-desc">ふんわりと柔らかい動きを表現し、毎朝のスタイリングを圧倒的に楽にします。</p>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-main">
+                            <h3>高濃度髪質改善エステ</h3>
+                            <span class="price-cost">¥9,500 〜</span>
+                        </div>
+                        <p class="price-desc">最新AI診断に基づき、不足した毛髪成分を補修。極上の手触りとツヤをキープします。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Access / Hours -->
+        <section id="access">
+            <div class="access-grid">
+                <div class="access-info reveal reveal-left">
+                    <h3>AURA HAIR SALON</h3>
+                    <table class="info-table">
+                        <tr>
+                            <td>アクセス</td>
+                            <td>松本駅より徒歩約5分（※詳細住所はデモのため非公開）</td>
+                        </tr>
+                        <tr>
+                            <td>営業時間</td>
+                            <td>09:30 - 18:00 (最終受付 カット 17:00 / カラー・パーマ 16:00)</td>
+                        </tr>
+                        <tr>
+                            <td>定休日</td>
+                            <td>毎週月曜日、第1・2・3火曜日</td>
+                        </tr>
+                        <tr>
+                            <td>お問い合わせ</td>
+                            <td>Web予約システムにて24時間受付中</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="reveal reveal-right reveal-delay-1">
+                    <div class="map-box">
+                        <div style="text-align: center; padding: 20px;">
+                            <p style="font-weight: 700; margin-bottom: 5px; color: var(--text-dark);">MAP AREA</p>
+                            <p style="font-size: 0.8rem; margin-bottom: 10px;">松本駅 周辺エリア</p>
+                            <p style="font-size: 0.75rem;">（※実際のWebサイトではここにGoogle Mapのインタラクティブマップが埋め込まれます）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to works -->
+        <section class="back-bar">
+            <a href="../../works.html#work-hairsalon" class="btn-back">実績ページへ戻る</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AURA HAIR SALON. All Rights Reserved. DEMO SITE.</p>
+    </footer>
+
+    <!-- Script for smooth scroll & active header & intersection observer & tab animations -->
+    <script>
+        // 1. Loading Animation Hide
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.classList.add('loaded');
+            }, 1000); // 1秒表示して上にスライドアウト
+        });
+
+        // 2. Scroll Progress Bar & Header control & Parallax
+        const header = document.getElementById('header');
+        const heroBg = document.getElementById('hero-bg');
+        const progressBar = document.getElementById('progress-bar');
+        
+        window.addEventListener('scroll', () => {
+            // スクロールプログレスバー
+            const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (totalScroll > 0) {
+                const scrolledPercent = (window.scrollY / totalScroll) * 100;
+                progressBar.style.width = scrolledPercent + '%';
+            }
+
+            // ヘッダー背景色・縮小
+            if (window.scrollY > 80) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // ヒーロー画像のパララックス
+            let scrollPos = window.scrollY;
+            if (heroBg) {
+                // アニメーション中のため、少しの移動を乗せる
+                heroBg.style.transform = `translateY(${scrollPos * 0.25}px)`;
+            }
+        });
+
+        // 3. Intersection Observer (スクロール連動フェードイン)
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // 4. ヘアカタログのインタラクティブタブ切り替え
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const galleryGrid = document.getElementById('gallery-grid');
+        const styleCards = document.querySelectorAll('.style-card');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // アクティブ状態の切り替え
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-style');
+
+                // 一度フェードアウト
+                galleryGrid.classList.add('fade-out');
+
+                setTimeout(() => {
+                    // 表示切り替え
+                    styleCards.forEach(card => {
+                        const cardStyle = card.getAttribute('data-style');
+                        if (filter === 'all' || cardStyle === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // フェードイン
+                    galleryGrid.classList.remove('fade-out');
+                }, 400);
+            });
+        });
+    </script>
+</body>
+</html>

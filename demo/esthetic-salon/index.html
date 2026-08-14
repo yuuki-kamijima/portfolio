@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>MUSE BEAUTY CLINIC | ミューズ ビューティークリニック</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600&family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #FFFFFF;
+            --bg-warm: #FCFAF6; /* 温かみと清潔感のあるサンドベージュ */
+            --text-dark: #3C332D; /* 柔らかなココアチャコール */
+            --text-muted: #8E837A;
+            --primary-accent: #C5A880; /* 上品なプラチナゴールド */
+            --border-color: #EFECE8;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: var(--font-sans);
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: transparent;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 1px solid transparent;
+        }
+
+        header.scrolled {
+            padding: 15px 8%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            color: var(--text-dark);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        nav a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-accent);
+        }
+
+        .btn-booking {
+            background-color: var(--primary-accent);
+            color: #ffffff !important;
+            padding: 10px 24px;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-booking:hover {
+            background-color: var(--text-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            height: 95vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 8%;
+            background-color: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.68) sepia(5%);
+            animation: slowZoom 20s linear infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            0% { transform: scale(1.02); }
+            100% { transform: scale(1.08); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            max-width: 800px;
+        }
+
+        .hero-content span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--primary-accent);
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.35;
+            letter-spacing: 0.08em;
+            margin-bottom: 25px;
+        }
+
+        .hero-content p {
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            padding: 15px 35px;
+            border: 1px solid var(--primary-accent);
+            color: var(--primary-accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-accent);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Section Commons */
+        section {
+            padding: 130px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 90px;
+        }
+
+        .section-header span {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--primary-accent);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+
+        /* Concerns Section (Photo Main Grid) */
+        .concerns-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .concern-card {
+            aspect-ratio: 4 / 5;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .concern-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.85);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .concern-card:hover .concern-img {
+            transform: scale(1.05);
+        }
+
+        .concern-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 25px;
+            background: linear-gradient(to top, rgba(44, 37, 33, 0.9) 0%, rgba(44, 37, 33, 0) 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 50%;
+            transition: background 0.4s ease;
+        }
+
+        .concern-card:hover .concern-overlay {
+            background: linear-gradient(to top, rgba(197, 168, 128, 0.95) 0%, rgba(197, 168, 128, 0.3) 100%);
+        }
+
+        .concern-overlay span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--primary-accent);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .concern-card:hover .concern-overlay span {
+            color: #ffffff;
+        }
+
+        .concern-overlay h3 {
+            font-size: 1.15rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        /* Treatment Menu (Visual List) */
+        .menu-section {
+            background-color: var(--bg-warm);
+            max-width: 100%;
+            padding: 130px 8%;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(60, 51, 45, 0.04);
+            border-color: var(--primary-accent);
+        }
+
+        .menu-card-img {
+            height: 100%;
+            min-height: 250px;
+            overflow: hidden;
+            background-color: #eaeaea;
+        }
+
+        .menu-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .menu-card:hover .menu-card-img img {
+            transform: scale(1.04);
+        }
+
+        .menu-card-body {
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .menu-card-body h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .menu-card-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-accent);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .menu-card-body p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Case Studies (Before & After Photo Main) */
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .case-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        .case-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .case-tag {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--primary-accent);
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .case-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .case-img-box {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .case-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .case-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(60, 51, 45, 0.8);
+            color: #ffffff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .case-label.after {
+            background-color: var(--primary-accent);
+        }
+
+        /* Flow Section */
+        .flow-section {
+            background-color: var(--bg-warm);
+            max-width: 100%;
+            padding: 130px 8%;
+        }
+
+        .flow-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .flow-step {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 45px;
+            position: relative;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            width: 1px;
+            height: calc(100% - 15px);
+            background-color: var(--primary-accent);
+            opacity: 0.3;
+        }
+
+        .flow-num {
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            border: 1px solid var(--primary-accent);
+            color: var(--primary-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .flow-text h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .flow-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Access / Shop Info (No specific address) */
+        .access-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .access-info h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 25px;
+        }
+
+        .info-table {
+            width: 100%;
+        }
+
+        .info-table td {
+            padding: 15px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-table td:first-child {
+            width: 120px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .map-box {
+            width: 100%;
+            height: 350px;
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Back to works Bar */
+        .back-bar {
+            background-color: var(--bg-warm);
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 14px 40px;
+            border: 1px solid var(--text-dark);
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: var(--text-dark);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: #3C332D;
+            color: #E5D5C5;
+            padding: 45px 8%;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .concerns-grid, .menu-grid, .case-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .access-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            header {
+                padding: 20px 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .menu-card {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-card-img {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="brand-logo">MUSE</div>
+        <nav>
+            <ul>
+                <li><a href="#concerns">Concerns</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#cases">Cases</a></li>
+                <li><a href="#access">Access</a></li>
+                <li><a href="#" class="btn-booking">Web Reservation</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg">
+                <img src="../../assets/img/esthetic_salon_demo.png" alt="MUSE Beauty Salon Interior">
+            </div>
+            <div class="hero-content">
+                <span>Private Esthetic & Beauty Salon</span>
+                <h1>人目を気にせず、<br>美しさを手に入れる。</h1>
+                <p>完全個室・完全予約制の上質なプライベート空間。経験豊富なセラピストが、あなたの「美しくなりたい」という想いに誠実にお応えします。</p>
+                <a href="#menu" class="btn-outline">View Menu</a>
+            </div>
+        </section>
+
+        <!-- Concerns (Photo Main Grid) -->
+        <section id="concerns">
+            <div class="section-header reveal">
+                <span>Search by Concern</span>
+                <h2>お悩み・目的から探す</h2>
+            </div>
+            
+            <div class="concerns-grid">
+                <!-- Concern 1 -->
+                <div class="concern-card reveal reveal-delay-1" onclick="location.href='#menu'">
+                    <img src="../../assets/img/esthetic_salon_demo.png" alt="エイジングケア" class="concern-img">
+                    <div class="concern-overlay">
+                        <span>Aging Care</span>
+                        <h3>しわ・たるみのケア</h3>
+                    </div>
+                </div>
+                <!-- Concern 2 -->
+                <div class="concern-card reveal reveal-delay-2" onclick="location.href='#menu'">
+                    <img src="../../assets/img/esthetic_salon_demo.png" alt="美肌" class="concern-img" style="filter: sepia(10%) brightness(0.95);">
+                    <div class="concern-overlay">
+                        <span>Skin Quality</span>
+                        <h3>肌質改善・ニキビケア</h3>
+                    </div>
+                </div>
+                <!-- Concern 3 -->
+                <div class="concern-card reveal reveal-delay-3" onclick="location.href='#menu'">
+                    <img src="../../assets/img/esthetic_salon_demo.png" alt="目元ケア" class="concern-img" style="filter: contrast(1.05) brightness(0.9);">
+                    <div class="concern-overlay">
+                        <span>Eye Care</span>
+                        <h3>目の下のクマ・くすみ</h3>
+                    </div>
+                </div>
+                <!-- Concern 4 -->
+                <div class="concern-card reveal reveal-delay-4" onclick="location.href='#menu'">
+                    <img src="../../assets/img/esthetic_salon_demo.png" alt="フェイスライン" class="concern-img" style="filter: grayscale(5%);">
+                    <div class="concern-overlay">
+                        <span>Facial Line</span>
+                        <h3>小顔・フェイスリフト</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Treatment Menu Section (Visual Card List) -->
+        <section id="menu" class="menu-section">
+            <div class="section-header reveal">
+                <span>Treatment Menu</span>
+                <h2>主要施術メニュー</h2>
+            </div>
+            
+            <div class="menu-grid">
+                <!-- Menu Card 1 -->
+                <div class="menu-card reveal">
+                    <div class="menu-card-img">
+                        <img src="../../assets/img/esthetic_salon_demo.png" alt="Aroma Body Treatment">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-card-price">¥12,000</span>
+                        <h3>アロマリンパボディ</h3>
+                        <p>上質なオーガニック精油を贅沢に使用した、全身のトリートメント。コリをほぐし、リンパのめぐりをスムーズに整えます。</p>
+                    </div>
+                </div>
+                <!-- Menu Card 2 -->
+                <div class="menu-card reveal">
+                    <div class="menu-card-img">
+                        <img src="../../assets/img/esthetic_salon_demo.png" alt="Skin Care Treatment" style="filter: sepia(10%);">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-card-price">¥11,000</span>
+                        <h3>肌育エイジングフェイシャル</h3>
+                        <p>最新の美容導入機器を用い、高濃度の美容液を肌の奥深くまで浸透。しわやたるみに直接アプローチし、ハリとツヤを与えます。</p>
+                    </div>
+                </div>
+                <!-- Menu Card 3 -->
+                <div class="menu-card reveal">
+                    <div class="menu-card-img">
+                        <img src="../../assets/img/esthetic_salon_demo.png" alt="Facial Lift" style="filter: contrast(1.05);">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-card-price">¥14,000</span>
+                        <h3>小顔リフトアップエステ</h3>
+                        <p>表情筋への的確なアプローチとリファインマッサージにより、フェイスラインをキュッと引き締め、シャープな印象へ導きます。</p>
+                    </div>
+                </div>
+                <!-- Menu Card 4 -->
+                <div class="menu-card reveal">
+                    <div class="menu-card-img">
+                        <img src="../../assets/img/esthetic_salon_demo.png" alt="Skin Peel" style="filter: grayscale(5%);">
+                    </div>
+                    <div class="menu-card-body">
+                        <span class="menu-card-price">¥9,500</span>
+                        <h3>毛穴ディープクリアピーリング</h3>
+                        <p>蓄積した古い角質や毛穴の汚れを優しくオフ。ターンオーバーを正常化し、ニキビ跡やくすみのない透明肌を育てます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Studies (Before & After Photo Main) -->
+        <section id="cases">
+            <div class="section-header reveal">
+                <span>Before & After Cases</span>
+                <h2>施術症例のご紹介</h2>
+            </div>
+            
+            <div class="case-grid">
+                <!-- Case Card 1 -->
+                <div class="case-card reveal">
+                    <h3>肌質改善・美肌エステコース</h3>
+                    <span class="case-tag">施術回数：3回 / 期間：2ヶ月</span>
+                    <div class="case-images">
+                        <div class="case-img-box">
+                            <img src="../../assets/img/esthetic_salon_demo.png" alt="Before Skin" style="filter: contrast(0.9) saturate(0.85);">
+                            <span class="case-label">Before</span>
+                        </div>
+                        <div class="case-img-box">
+                            <img src="../../assets/img/esthetic_salon_demo.png" alt="After Skin" style="filter: brightness(1.05) saturate(1.05);">
+                            <span class="case-label after">After</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Case Card 2 -->
+                <div class="case-card reveal">
+                    <h3>小顔リフトアップコース</h3>
+                    <span class="case-tag">施術回数：5回 / 期間：3ヶ月</span>
+                    <div class="case-images">
+                        <div class="case-img-box">
+                            <img src="../../assets/img/esthetic_salon_demo.png" alt="Before Lift" style="filter: brightness(0.95);">
+                            <span class="case-label">Before</span>
+                        </div>
+                        <div class="case-img-box">
+                            <img src="../../assets/img/esthetic_salon_demo.png" alt="After Lift" style="filter: brightness(1.05) contrast(1.03);">
+                            <span class="case-label after">After</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Treatment Flow -->
+        <section id="flow" class="flow-section">
+            <div class="section-header reveal">
+                <span>Treatment Flow</span>
+                <h2>施術の流れ</h2>
+            </div>
+            <div class="flow-container">
+                <div class="flow-step reveal">
+                    <div class="flow-num">01</div>
+                    <div class="flow-text">
+                        <h4>ご予約</h4>
+                        <p>当サロンは完全予約制となっております。WebまたはLINEより事前のご予約をお願いいたします。</p>
+                    </div>
+                </div>
+                <div class="flow-step reveal">
+                    <div class="flow-num">02</div>
+                    <div class="flow-text">
+                        <h4>ご来院・カウンセリング</h4>
+                        <p>お悩みや体調、理想の姿について詳しく伺います。気になる点がございましたら、何でもお気軽にご相談ください。</p>
+                    </div>
+                </div>
+                <div class="flow-step reveal">
+                    <div class="flow-num">03</div>
+                    <div class="flow-text">
+                        <h4>施術</h4>
+                        <p>完全個室の落ち着いたプライベート空間にて、丁寧にお客様に合わせたトリートメントを行います。</p>
+                    </div>
+                </div>
+                <div class="flow-step reveal">
+                    <div class="flow-num">04</div>
+                    <div class="flow-text">
+                        <h4>アフターフォロー</h4>
+                        <p>施術後の状態を確認し、お家でのケア方法などをアドバイスいたします。メイクブースもご自由にお使いいただけます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Access / Shop Info -->
+        <section id="access">
+            <div class="access-grid">
+                <div class="access-info reveal">
+                    <h3>MUSE BEAUTY CLINIC</h3>
+                    <table class="info-table">
+                        <tr>
+                            <td>アクセス</td>
+                            <td>最寄り駅より徒歩約8分（※詳細住所はデモのため非公開）</td>
+                        </tr>
+                        <tr>
+                            <td>診療時間</td>
+                            <td>10:00 - 13:00 / 14:00 - 16:00 (以降は完全予約施術のみ／最長19:00まで)</td>
+                        </tr>
+                        <tr>
+                            <td>定休日</td>
+                            <td>不定休</td>
+                        </tr>
+                        <tr>
+                            <td>駐車場</td>
+                            <td>近隣コインパーキングをご利用ください（割引制度あり）</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <div class="map-box">
+                        <div style="text-align: center; padding: 20px;">
+                            <p style="font-weight: 700; margin-bottom: 5px; color: var(--text-dark);">MAP AREA</p>
+                            <p style="font-size: 0.8rem; margin-bottom: 10px;">最寄り駅 周辺エリア</p>
+                            <p style="font-size: 0.75rem;">（※実際のWebサイトではここにGoogle Mapのインタラクティブマップが埋め込まれます）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to works -->
+        <section class="back-bar">
+            <a href="../../works.html#work-estheticsalon" class="btn-back">実績ページへ戻る</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 MUSE BEAUTY CLINIC. All Rights Reserved. DEMO SITE.</p>
+    </footer>
+
+    <!-- Script for smooth scroll & active header & intersection observer -->
+    <script>
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

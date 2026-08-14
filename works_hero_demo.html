@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Works Hero Demo | 上嶋勇己</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    
+    <style>
+        /* ==========================================================================
+           1. ページロード時のフェードイン演出 (Vite / index.html と統一)
+           ========================================================================== */
+        @keyframes pageFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body {
+            animation: pageFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* 共通ナビゲーションのアクティブカプセルスタイル */
+        header.header-capsule nav ul li a.active-link {
+            background: rgba(26, 26, 26, 0.06);
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            border-radius: 99px;
+            padding: 6px 16px;
+            margin: -6px -16px;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+        @media only screen and (max-width: 767px) {
+            header.header-capsule nav ul li a.active-link {
+                background: rgba(26, 26, 26, 0.08);
+                padding: 10px 24px;
+                margin: 0;
+            }
+        }
+
+        /* ==========================================================================
+           2. デモ用フローティング・コントロールパネル
+           ========================================================================== */
+        .demo-panel-fixed {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            text-align: center;
+            width: 95%;
+            max-width: 720px;
+        }
+
+        .demo-switcher {
+            display: inline-flex;
+            background: rgba(26, 26, 26, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+            padding: 5px;
+            gap: 4px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow-x: auto;
+            max-width: 100%;
+            scrollbar-width: none;
+        }
+        .demo-switcher::-webkit-scrollbar {
+            display: none;
+        }
+
+        .switcher-btn {
+            background: none;
+            border: none;
+            padding: 10px 18px;
+            font-family: "Inter", "Noto Sans JP", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            border-radius: 99px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+        }
+
+        .switcher-btn:hover {
+            color: #ffffff;
+        }
+
+        .switcher-btn.active {
+            background: #ffffff;
+            color: #1a1a1a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ==========================================================================
+           3. ヒーローセクション共通のトランジション制御 (バグ対策・堅牢化)
+           ========================================================================== */
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: #d6d6ce;
+        }
+
+        .hero-layout {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none !important;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+        }
+
+        .hero-layout.active-hero {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .hero-split.active-hero {
+            display: flex !important;
+        }
+
+        .hero-editorial.active-hero {
+            display: flex !important;
+        }
+
+        .hero-parallax.active-hero {
+            display: flex !important;
+        }
+
+        .hero-grid.active-hero {
+            display: grid !important;
+        }
+
+        .hero-cinematic.active-hero {
+            display: flex !important;
+        }
+
+        /* JavaScriptやブラウザのアニメーションバグを回避するため、Transitionベースで実装 */
+        .hero-layout h1,
+        .hero-layout .subtitle,
+        .hero-layout .hero-image-wrapper,
+        .hero-layout .editorial-bg-text,
+        .hero-layout .cinematic-bg-blur,
+        .hero-layout .grid-cell {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* 画像用トランジション（少し大きめのズームアウト） */
+        .hero-layout .hero-image-wrapper {
+            transform: scale(0.96) translateY(20px);
+        }
+
+        /* アクティブ時の表示（遅延時間を個別に設定し滑らかに連動） */
+        .hero-layout.active-hero h1 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.15s;
+        }
+
+        .hero-layout.active-hero .hero-image-wrapper {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            transition-delay: 0.3s;
+        }
+
+        .hero-layout.active-hero .subtitle {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.45s;
+        }
+
+        /* --------------------------------------------------
+           ヒーロー候補1: Asymmetry Split (アシンメトリースプリット)
+           -------------------------------------------------- */
+        .hero-split {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 8% 0 8%;
+            box-sizing: border-box;
+        }
+
+        .split-text-col {
+            flex: 0 0 45%;
+            text-align: left;
+            position: relative;
+            z-index: 5;
+        }
+
+        .split-text-col h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .split-text-col .subtitle {
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            font-weight: 500;
+            color: #4a4a4a;
+            line-height: 1.7;
+            letter-spacing: 0.05em;
+            margin-bottom: 40px;
+        }
+
+        .hero-split .hero-image-wrapper {
+            flex: 0 0 48%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            position: relative;
+        }
+
+        .hero-split .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.8s ease;
+        }
+
+        .hero-split .hero-image-wrapper:hover img {
+            filter: grayscale(0%);
+        }
+
+        .split-scroll {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+
+        .split-scroll::after {
+            content: "";
+            display: inline-block;
+            width: 40px;
+            height: 1px;
+            background: #1a1a1a;
+            transform-origin: left;
+            animation: lineExpand 2.0s infinite ease-in-out;
+        }
+
+        @keyframes lineExpand {
+            0% { transform: scaleX(0); transform-origin: left; }
+            50% { transform: scaleX(1); transform-origin: left; }
+            51% { transform: scaleX(1); transform-origin: right; }
+            100% { transform: scaleX(0); transform-origin: right; }
+        }
+
+        @media only screen and (max-width: 900px) {
+            .hero-split {
+                flex-direction: column-reverse;
+                justify-content: center;
+                gap: 40px;
+                padding: 100px 4% 40px 4%;
+                height: auto;
+                min-height: 100vh;
+            }
+            .split-text-col, .hero-split .hero-image-wrapper {
+                flex: 0 0 100%;
+                width: 100%;
+            }
+            .split-text-col {
+                text-align: center;
+            }
+            .split-scroll {
+                justify-content: center;
+            }
+        }
+
+        /* --------------------------------------------------
+           ヒーロー候補2: Editorial Typography (エディトリアルタイポグラフィ)
+           -------------------------------------------------- */
+        .hero-editorial {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-editorial .editorial-bg-text {
+            position: absolute;
+            font-family: "Inter", sans-serif;
+            font-size: clamp(5rem, 22vw, 22rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.05em;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(26, 26, 26, 0.08);
+            user-select: none;
+            z-index: 1;
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            transition-delay: 0.1s;
+        }
+        .hero-editorial.active-hero .editorial-bg-text {
+            opacity: 1;
+            transform: translate(-50%, -50%) translateY(0);
+        }
+
+        .editorial-content {
+            position: relative;
+            z-index: 5;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-editorial h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .hero-editorial .subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            font-weight: 500;
+            color: #1a1a1a;
+            letter-spacing: 0.1em;
+        }
+
+        .editorial-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("./assets/img/macbook.png");
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%);
+            opacity: 0.04;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* --------------------------------------------------
+           ヒーロー候補3: Parallax Overlap Frame (パララックスオーバーラップ)
+           -------------------------------------------------- */
+        .hero-parallax {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 4%;
+            box-sizing: border-box;
+        }
+
+        .parallax-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16/10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 中央の浮遊する額縁つき画像 (初期状態を非表示から表示するCSS Transitionに変更) */
+        .hero-parallax .hero-image-wrapper {
+            position: absolute;
+            width: 70%;
+            height: 85%;
+            border: 12px solid #ffffff;
+            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .hero-parallax .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transform: scale(1.05);
+            transition: transform 0.8s ease;
+        }
+
+        .parallax-title-box {
+            position: absolute;
+            z-index: 5;
+            left: 5%;
+            top: 40%;
+            pointer-events: none;
+            /* mix-blend-mode用のスタック調整 */
+            isolation: isolate;
+        }
+
+        .hero-parallax h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .parallax-sub-box {
+            position: absolute;
+            right: 5%;
+            bottom: 15%;
+            z-index: 5;
+            max-width: 300px;
+            text-align: right;
+            pointer-events: none;
+        }
+
+        .hero-parallax .subtitle {
+            font-size: clamp(0.85rem, 1.5vw, 1.0rem);
+            font-weight: 500;
+            color: #1a1a1a;
+            line-height: 1.6;
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .hero-parallax .hero-image-wrapper {
+                width: 90%;
+                height: 70%;
+                border-width: 6px;
+            }
+            .parallax-title-box {
+                left: 2%;
+                top: 45%;
+            }
+            .parallax-sub-box {
+                right: 5%;
+                bottom: 5%;
+                text-align: center;
+                width: 90%;
+                max-width: none;
+            }
+        }
+
+        /* --------------------------------------------------
+           ヒーロー候補4: Minimalist Grid Lines (ミニマリスト・グリッドライン)
+           -------------------------------------------------- */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1.2fr;
+            box-sizing: border-box;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.15);
+            padding-top: 80px;
+        }
+
+        .grid-cell {
+            position: relative;
+            padding: 40px 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(26, 26, 26, 0.15);
+            border-bottom: 1px solid rgba(26, 26, 26, 0.15);
+            box-sizing: border-box;
+        }
+
+        .grid-cell:nth-child(2n) {
+            border-right: none;
+        }
+
+        .grid-cell:nth-child(3), .grid-cell:nth-child(4) {
+            border-bottom: none;
+        }
+
+        /* グリッドセル自体のフェードイン遅延 */
+        .hero-grid.active-hero .grid-cell {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-grid.active-hero .grid-cell:nth-child(1) { transition-delay: 0.1s; }
+        .hero-grid.active-hero .grid-cell:nth-child(2) { transition-delay: 0.2s; }
+        .hero-grid.active-hero .grid-cell:nth-child(3) { transition-delay: 0.3s; }
+        .hero-grid.active-hero .grid-cell:nth-child(4) { transition-delay: 0.4s; }
+
+        .hero-grid h1 {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin: 0;
+            opacity: 1 !important; /* セル自体のアニメーションに依存 */
+            transform: none !important;
+        }
+
+        .hero-grid .subtitle {
+            font-size: clamp(0.85rem, 1.3vw, 1.0rem);
+            font-weight: 400;
+            color: #4a4a4a;
+            line-height: 1.6;
+            margin: 0;
+            max-width: 420px;
+            opacity: 1 !important; /* セル自体のアニメーションに依存 */
+            transform: none !important;
+        }
+
+        .hero-grid .hero-image-wrapper {
+            width: 100%;
+            height: 100%;
+            max-height: 280px;
+            overflow: hidden;
+            border: 1px solid rgba(26, 26, 26, 0.12);
+            opacity: 1 !important; /* セル自体のアニメーションに依存 */
+            transform: none !important;
+        }
+
+        .hero-grid .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+        }
+
+        .grid-info-meta {
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(26, 26, 26, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .grid-scroll-prompt {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+        .grid-scroll-prompt svg {
+            width: 14px;
+            height: 14px;
+            animation: arrowBounce 1.5s infinite ease-in-out;
+        }
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+                height: auto;
+                min-height: 100vh;
+                padding-bottom: 60px;
+            }
+            .grid-cell {
+                border-right: none !important;
+                border-bottom: 1px solid rgba(26, 26, 26, 0.15) !important;
+                padding: 30px 6%;
+            }
+            .grid-cell:last-child {
+                border-bottom: none !important;
+            }
+            .hero-grid .hero-image-wrapper {
+                max-height: 200px;
+            }
+        }
+
+        /* --------------------------------------------------
+           ヒーロー候補5: Fullscreen Blur & Cinematic (シネマティック)
+           -------------------------------------------------- */
+        .hero-cinematic {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 背景ボケ画像 (ラジアルグラデーションとブレンドして画像がなくても美しく表示) */
+        .cinematic-bg-blur {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background-image: radial-gradient(circle at center, rgba(214, 214, 206, 0.1) 0%, rgba(214, 214, 206, 0.8) 80%), url("./assets/img/macbook.png");
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) grayscale(100%) brightness(0.95);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+            transform: scale(1.05);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-cinematic.active-hero .cinematic-bg-blur {
+            opacity: 0.35;
+            transform: scale(1);
+        }
+
+        .cinematic-content {
+            position: relative;
+            z-index: 5;
+            max-width: 1000px;
+            padding: 0 4%;
+            box-sizing: border-box;
+        }
+
+        .hero-cinematic h1 {
+            font-size: clamp(2.8rem, 11vw, 8.5rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+        }
+
+        .hero-cinematic .subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.25rem);
+            font-weight: 500;
+            color: #4a4a4a;
+            letter-spacing: 0.15em;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 本番適用のカプセルヘッダー (Capsule Style) -->
+    <header class="header-capsule">
+        <div class="index_mane">
+            <div class="index_h1">
+                <a href="index.html" class="brand-logo" aria-label="YUUKI KAMIJIMA">
+                    <span class="logo-text">YUUKI KAMIJIMA</span>
+                </a>
+            </div>
+            
+            <!-- 活動ステータス表示 -->
+            <div class="local-status">
+                NAGANO, JP // LOCAL TIME <span id="live-time">00:00:00</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="works.html" class="active-link">Works<span>制作実績</span></a></li>
+                    <li><a href="about.html">About<span>自己紹介</span></a></li>
+                    <li><a href="contact.html">Contact<span>お問い合わせ</span></a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" id="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- ヒーローセクションコンテナ -->
+        <div class="hero-container">
+
+            <!-- ==========================================
+                 候補1: Asymmetry Split (アシンメトリースプリット)
+                 ========================================== -->
+            <div id="hero-split" class="hero-layout hero-split active-hero">
+                <div class="split-text-col">
+                    <h1>Selected<br>Works.</h1>
+                    <p class="subtitle">これまでに制作した代表的な実績を紹介します。</p>
+                    <div class="split-scroll">Scroll down</div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="./assets/img/macbook.png" alt="MacBook Mockup" onerror="this.src='./assets/img/work1.png'">
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 候補2: Editorial Typography (エディトリアルタイポグラフィ)
+                 ========================================== -->
+            <div id="hero-editorial" class="hero-layout hero-editorial">
+                <div class="editorial-bg-img"></div>
+                <div class="editorial-bg-text">WORKS</div>
+                <div class="editorial-content">
+                    <h1>Selected Works.</h1>
+                    <p class="subtitle">これまでに制作した代表的な実績を紹介します。</p>
+                </div>
+                <div class="scroll-indicator" style="position: absolute; bottom: 60px; z-index: 5;">Scroll</div>
+            </div>
+
+            <!-- ==========================================
+                 候補3: Parallax Overlap Frame (パララックスオーバーラップ)
+                 ========================================== -->
+            <div id="hero-parallax" class="hero-layout hero-parallax">
+                <div class="parallax-wrapper">
+                    <div class="parallax-title-box">
+                        <h1>Selected<br>Works.</h1>
+                    </div>
+                    <div class="hero-image-wrapper js-parallax-img">
+                        <img src="./assets/img/macbook.png" alt="MacBook Mockup" onerror="this.src='./assets/img/work1.png'">
+                    </div>
+                    <div class="parallax-sub-box">
+                        <p class="subtitle">これまでに制作した代表的な実績を紹介します。</p>
+                    </div>
+                </div>
+                <div class="scroll-indicator" style="position: absolute; bottom: 60px; z-index: 5;">Scroll</div>
+            </div>
+
+            <!-- ==========================================
+                 候補4: Minimalist Grid Lines (ミニマリスト・グリッドライン)
+                 ========================================== -->
+            <div id="hero-grid" class="hero-layout hero-grid">
+                <div class="grid-cell">
+                    <div class="grid-info-meta">01 / OVERVIEW</div>
+                    <h1>Selected<br>Works.</h1>
+                </div>
+                <div class="grid-cell">
+                    <div class="grid-info-meta">02 / STATEMENT</div>
+                    <p class="subtitle">これまでに制作した代表的な実績を紹介します。デザインとコーディングを一貫して行うことで、想いを確実な価値へ落とし込みます。</p>
+                </div>
+                <div class="grid-cell">
+                    <div class="hero-image-wrapper">
+                        <img src="./assets/img/macbook.png" alt="MacBook Mockup" onerror="this.src='./assets/img/work1.png'">
+                    </div>
+                </div>
+                <div class="grid-cell">
+                    <div class="grid-scroll-prompt">
+                        <span>Scroll to view</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 候補5: Fullscreen Blur & Cinematic (シネマティック)
+                 ========================================== -->
+            <div id="hero-cinematic" class="hero-layout hero-cinematic">
+                <div class="cinematic-bg-blur"></div>
+                <div class="cinematic-content">
+                    <h1>Selected Works.</h1>
+                    <p class="subtitle">デザインの力で、価値を伝える。代表的な制作実績のご紹介です。</p>
+                </div>
+                <div class="scroll-indicator" style="position: absolute; bottom: 60px; z-index: 5;">Scroll</div>
+            </div>
+
+        </div>
+
+        <!-- 固定デモ操作スイッチ (5候補対応) -->
+        <div class="demo-panel-fixed">
+            <div class="demo-switcher">
+                <button class="switcher-btn active" data-hero="split">1. Split</button>
+                <button class="switcher-btn" data-hero="editorial">2. Editorial</button>
+                <button class="switcher-btn" data-hero="parallax">3. Parallax</button>
+                <button class="switcher-btn" data-hero="grid">4. Grid</button>
+                <button class="switcher-btn" data-hero="cinematic">5. Cinematic</button>
+            </div>
+            <p class="demo-instruction" style="color: #666; font-size: 9px; text-shadow: 0 1px 4px rgba(255,255,255,0.8); margin-top: 6px; font-weight: 700;">
+                ボタンをクリックして、ファーストビューのデザイン候補を切り替えられます。
+            </p>
+        </div>
+
+        <!-- 本番実績グリッドセクション（元のレイアウトをそのまま維持） -->
+        <section id="works" style="padding-top: 100px; padding-bottom: 120px;">
+            <div class="works-grid">
+                
+                <!-- 01: 農家のホームページ -->
+                <div class="work-item reveal" id="work-farmer">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/azusa.png" alt="農家のホームページ" class="pos-bottom" onerror="this.src='./assets/img/coming_soon1.png'">
+                    </div>
+                    <div class="work-info">
+                        <h3>農家のホームページ</h3>
+                        <p>Web Design & Coding</p>
+                        <div class="work-details">
+                            <div class="detail-row">
+                                <span class="detail-label">カテゴリ</span>
+                                <span class="detail-value">農家 (農業用コーポレートサイト)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">担当作業</span>
+                                <span class="detail-value">Webデザイン / コーディング / レスポンシブ対応</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">使用技術</span>
+                                <span class="detail-value">HTML5 / CSS3 (SASS) / JavaScript / Figma</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">制作概要</span>
+                                <span class="detail-value">自然の温もりや新鮮な作物の魅力を伝えるため、オーガニックな色調とクリーンなタイポグラフィでデザイン。スマートフォン表示にも最適化したレスポンシブコーディングで構築しました。</span>
+                            </div>
+                        </div>
+                        <div class="work-link-wrapper">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="work-link-btn">
+                                <span>Webサイトを見る</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02: ブリーダーのホームページ -->
+                <div class="work-item reveal" id="work-breeder">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/wah.png" alt="ブリーダーのホームページ" onerror="this.src='./assets/img/coming_soon2.png'">
+                    </div>
+                    <div class="work-info">
+                        <h3>ブリーダーのホームページ</h3>
+                        <p>Web Design & WordPress</p>
+                        <div class="work-details">
+                            <div class="detail-row">
+                                <span class="detail-label">カテゴリ</span>
+                                <span class="detail-value">ブリーダー (紹介・販売用ウェブサイト)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">担当作業</span>
+                                <span class="detail-value">Webデザイン / コーディング / WordPress構築</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">使用技術</span>
+                                <span class="detail-value">HTML5 / CSS3 (SASS) / JavaScript / PHP / WordPress</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">制作概要</span>
+                                <span class="detail-value">子犬たちの健康や愛情豊かな育成環境が伝わるよう、温かみと信頼感のあるトーン＆マナーでデザイン。WordPressによるブログ機能や子犬情報の更新機能も実装しています。</span>
+                            </div>
+                        </div>
+                        <div class="work-link-wrapper">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="work-link-btn">
+                                <span>Webサイトを見る</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 03: カフェのホームページ -->
+                <div class="work-item reveal" id="work-cafe">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/coming_soon3.png" alt="カフェのホームページ" onerror="this.src='./assets/img/coming_soon3.png'">
+                    </div>
+                    <div class="work-info">
+                        <h3>カフェのホームページ</h3>
+                        <p>Web Design & Branding</p>
+                        <div class="work-details">
+                            <div class="detail-row">
+                                <span class="detail-label">カテゴリ</span>
+                                <span class="detail-value">カフェ (店舗公式サイト)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">担当作業</span>
+                                <span class="detail-value">企画 / ブランディング / デザイン / コーディング</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">使用技術</span>
+                                <span class="detail-value">HTML5 / CSS3 (SASS) / JavaScript / Illustrator / Photoshop</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">制作概要</span>
+                                <span class="detail-value">店舗独自のコンセプトや魅力を伝えるブランディングから参画。メニュー紹介やアクセスページなど、来店促進を意識した動線設計とビジュアル重視 of 構成で制作しました。</span>
+                            </div>
+                        </div>
+                        <div class="work-link-wrapper">
+                            <a href="./demo/cafe/index.html" target="_blank" rel="noopener noreferrer" class="work-link-btn">
+                                <span>Webサイトを見る (Demo)</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 04: 工場のホームページ -->
+                <div class="work-item reveal" id="work-factory">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/coming_soon4.png" alt="工場のホームページ" onerror="this.src='./assets/img/coming_soon4.png'">
+                    </div>
+                    <div class="work-info">
+                        <h3>工場のホームページ</h3>
+                        <p>Web Design & Coding</p>
+                        <div class="work-details">
+                            <div class="detail-row">
+                                <span class="detail-label">カテゴリ</span>
+                                <span class="detail-value">工場 (企業コーポレートサイト)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">担当作業</span>
+                                <span class="detail-value">デザイン / コーディング / 多言語対応</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">使用技術</span>
+                                <span class="detail-value">HTML5 / CSS3 (SASS) / JavaScript / Figma</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">制作概要</span>
+                                <span class="detail-value">精密機械メーカー様のコーポレートサイト。技術力の高さと信頼性を表現するため、ブルーグレーを基調としたソリッドなデザインで構築しました。</span>
+                            </div>
+                        </div>
+                        <div class="work-link-wrapper">
+                            <a href="./demo/factory/index.html" target="_blank" rel="noopener noreferrer" class="work-link-btn">
+                                <span>Webサイトを見る (Demo)</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Hamburger Menu Logic
+            const menuToggle = document.getElementById('menu-toggle');
+            const header = document.querySelector('header');
+            const navLinks = document.querySelectorAll('nav a');
+
+            if (menuToggle && header) {
+                menuToggle.addEventListener('click', () => {
+                    header.classList.toggle('nav-open');
+                    document.body.style.overflow = header.classList.contains('nav-open') ? 'hidden' : '';
+                });
+
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        header.classList.remove('nav-open');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+
+            // Intersection Observer for reveal animations
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            };
+
+            const revealObserver = new IntersectionObserver(revealCallback, {
+                threshold: 0.05
+            });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // リアルタイム時刻更新（長野）
+            function updateTime() {
+                const timeSpan = document.getElementById('live-time');
+                if (!timeSpan) return;
+                const now = new Date();
+                const options = {
+                    timeZone: 'Asia/Tokyo',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+                timeSpan.textContent = now.toLocaleTimeString('ja-JP', options);
+            }
+            setInterval(updateTime, 1000);
+            updateTime();
+
+            // スクロール検知によるヘッダー縮小制御
+            window.addEventListener('scroll', () => {
+                const headerContainer = document.querySelector('header');
+                if (headerContainer) {
+                    if (window.scrollY > 80) {
+                        headerContainer.classList.add('scrolled');
+                    } else {
+                        headerContainer.classList.remove('scrolled');
+                    }
+                }
+            });
+
+            // ==========================================================================
+            // ヒーローデザイン候補切り替えロジック
+            // ==========================================================================
+            const switcherButtons = document.querySelectorAll('.switcher-btn');
+            const heroLayouts = document.querySelectorAll('.hero-layout');
+            const heroContainer = document.querySelector('.hero-container');
+
+            switcherButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetHero = btn.getAttribute('data-hero');
+                    
+                    // ボタンのアクティブ状態切り替え
+                    switcherButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // ヒーローコンテナのフェードアウト
+                    heroContainer.style.opacity = '0';
+                    heroContainer.style.transition = 'opacity 0.4s ease';
+
+                    setTimeout(() => {
+                        // ヒーローレイアウトの切り替え
+                        heroLayouts.forEach(layout => {
+                            layout.classList.remove('active-hero');
+                            if (layout.id === `hero-${targetHero}`) {
+                                layout.classList.add('active-hero');
+                            }
+                        });
+
+                        // コンテナのフェードイン
+                        heroContainer.style.opacity = '1';
+                    }, 400);
+                });
+            });
+
+            // ==========================================================================
+            // パララックス（スクロール連動）制御 (候補3用)
+            // ==========================================================================
+            const parallaxImg = document.querySelector('.js-parallax-img');
+            
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                
+                // 画面外（下にスクロールしきった時）は処理をスキップして負荷軽減
+                if (scrollY > window.innerHeight) return;
+                
+                // パララックス画像の移動（スクロール速度の0.15倍で遅れて上方向に移動）
+                if (parallaxImg && document.getElementById('hero-parallax').classList.contains('active-hero')) {
+                    const speed = 0.15;
+                    const yPos = -(scrollY * speed);
+                    parallaxImg.style.transform = `translateY(${yPos}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

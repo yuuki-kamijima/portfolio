@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About Design Demos | 上嶋勇己</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/common.css">
+
+    <style>
+        /* ==========================================================================
+           1. 共通デモページ設定 & リセット
+           ========================================================================== */
+        body {
+            background-color: #d6d6ce;
+            color: #1a1a1a;
+            font-family: "Inter", "Noto Sans JP", sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* フローティングデモ操作スイッチ */
+        .demo-control-panel {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: 95%;
+            max-width: 680px;
+            text-align: center;
+        }
+
+        .demo-selector-tabs {
+            display: inline-flex;
+            background: rgba(26, 26, 26, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 99px;
+            padding: 4px;
+            gap: 2px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow-x: auto;
+            max-width: 100%;
+            scrollbar-width: none;
+        }
+
+        .demo-selector-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.65);
+            cursor: pointer;
+            border-radius: 99px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: #1a1a1a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-instruction {
+            color: #4a4a4a;
+            font-size: 9px;
+            font-weight: 700;
+            margin-top: 6px;
+            text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.05em;
+        }
+
+        /* デモセクションの表示制御 */
+        .demo-section-wrapper {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .demo-section-wrapper.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ヒーローセクション（ダミー） */
+        .demo-dummy-hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #d6d6ce;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+            position: relative;
+        }
+
+        .demo-dummy-hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .demo-dummy-hero p {
+            font-size: clamp(0.9rem, 2vw, 1.15rem);
+            font-weight: 500;
+            color: #4a4a4a;
+            letter-spacing: 0.1em;
+        }
+
+        /* ==========================================================================
+           案A: Editorial Split (エディトリアル・スプリット)
+           ========================================================================== */
+        .style-editorial {
+            padding: 100px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .editorial-left {
+            position: sticky;
+            top: 100px;
+        }
+
+        .editorial-image-wrapper {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(26, 26, 26, 0.08);
+            background: #eaeaea;
+        }
+
+        .editorial-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.8s ease, transform 0.8s ease;
+        }
+
+        .editorial-image-wrapper:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        .editorial-meta-box {
+            margin-top: 30px;
+            border-left: 2px solid #1a1a1a;
+            padding-left: 20px;
+        }
+
+        .editorial-meta-box h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .editorial-meta-box p {
+            font-size: 0.9rem;
+            color: #555555;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .editorial-right {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .editorial-bio-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .editorial-bio-text p {
+            margin: 0 0 24px 0;
+        }
+
+        .editorial-bio-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .editorial-section-title {
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .editorial-section-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: rgba(26, 26, 26, 0.15);
+        }
+
+        /* 案A用スキルタグスタイル */
+        .editorial-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .editorial-tag {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(26, 26, 26, 0.15);
+            border-radius: 99px;
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #1a1a1a;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .editorial-tag:hover {
+            background: #1a1a1a;
+            color: #d6d6ce;
+            border-color: #1a1a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (max-width: 900px) {
+            .editorial-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .editorial-left {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        /* ==========================================================================
+           案B: Glassmorphism Blobs (グラスモルフィズム・カード＆光球背景)
+           ========================================================================== */
+        .style-glass {
+            position: relative;
+            padding: 120px 8%;
+            background: #d0d0c8;
+            overflow: hidden;
+        }
+
+        /* 背景で動くグラデーション光球 */
+        .blob-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .blur-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            animation: blobMove 18s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            width: 450px;
+            height: 450px;
+            background: rgba(184, 134, 11, 0.35); /* 深いゴールド調 */
+            top: -50px;
+            left: 10%;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(107, 142, 35, 0.3); /* オリーブ調 */
+            bottom: -100px;
+            right: 5%;
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+
+        @keyframes blobMove {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, 60px) scale(1.15); }
+            100% { transform: translate(-40px, -80px) scale(0.9); }
+        }
+
+        .glass-layout {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03);
+            transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+        }
+
+        .glass-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin: 0 0 30px 0;
+            color: #1a1a1a;
+        }
+
+        .glass-bio {
+            font-size: 1.0rem;
+            line-height: 1.85;
+            color: #1a1a1a;
+        }
+
+        .glass-bio p {
+            margin: 0 0 20px 0;
+        }
+
+        .glass-bio p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 案B用詳細リスト */
+        .glass-details-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .glass-detail-item {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+        }
+
+        .glass-detail-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.55);
+        }
+
+        .glass-detail-item h3 {
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(26, 26, 26, 0.5);
+            margin: 0 0 12px 0;
+        }
+
+        .glass-detail-item p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        @media (max-width: 900px) {
+            .glass-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* ==========================================================================
+           案C: Timeline Storyteller (タイムライン・ストーリーテラー)
+           ========================================================================== */
+        .style-timeline {
+            padding: 120px 8%;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 中央の縦ライン */
+        .timeline-vertical-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.15);
+            z-index: 1;
+        }
+
+        .timeline-lead-card {
+            background: #e1e1d9;
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+            max-width: 680px;
+            margin: 0 auto 100px auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.03);
+        }
+
+        .timeline-lead-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .timeline-nodes-list {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+        }
+
+        .timeline-node {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            position: relative;
+        }
+
+        /* 中央のポインタ丸印 */
+        .timeline-pointer {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            border: 4px solid #d6d6ce;
+            box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.2);
+            z-index: 5;
+        }
+
+        .timeline-content-card {
+            background: #ffffff;
+            border: 1px solid rgba(26, 26, 26, 0.08);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .timeline-content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .timeline-node:nth-child(even) .timeline-content-card {
+            grid-column: 2; /* 偶数は右側に配置 */
+        }
+
+        .timeline-node:nth-child(odd) .timeline-content-card {
+            grid-column: 1; /* 奇数は左側に配置 */
+            text-align: right;
+        }
+
+        /* 年代表示タグ */
+        .timeline-year-tag {
+            display: inline-block;
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            color: #ffffff;
+            background: #1a1a1a;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content-card h3 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+        }
+
+        .timeline-content-card p {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: #4a4a4a;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-vertical-line {
+                left: 20px;
+            }
+            .timeline-pointer {
+                left: 20px;
+            }
+            .timeline-node {
+                grid-template-columns: 1fr;
+                gap: 0;
+                padding-left: 45px;
+            }
+            .timeline-node:nth-child(odd) .timeline-content-card,
+            .timeline-node:nth-child(even) .timeline-content-card {
+                grid-column: 1;
+                text-align: left;
+            }
+            .timeline-lead-card {
+                margin-bottom: 50px;
+                padding: 25px;
+            }
+            .timeline-nodes-list {
+                gap: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- フローティングデモ操作スイッチ -->
+    <div class="demo-control-panel">
+        <div class="demo-selector-tabs">
+            <button class="tab-btn active" data-style="editorial">
+                <span>案A: エディトリアル</span>
+            </button>
+            <button class="tab-btn" data-style="glass">
+                <span>案B: グラスモ・グラデ</span>
+            </button>
+            <button class="tab-btn" data-style="timeline">
+                <span>案C: タイムライン</span>
+            </button>
+        </div>
+        <p class="demo-instruction">
+            上のボタンをクリックして、自己紹介（#about）のデザイン候補を切り替えられます。
+        </p>
+    </div>
+
+    <!-- ヒーローセクション（本番のCinematicヒーローを模したデザイン） -->
+    <section id="hero" class="hero hero-cinematic">
+        <div class="cinematic-bg-container">
+            <div class="cinematic-bg-img" style="background-image: url('./assets/img/IMG_8299.jpeg'); background-position: 80% 15%;"></div>
+            <div class="cinematic-bg-gradient"></div>
+        </div>
+        <div class="cinematic-content">
+            <h1>About Me.</h1>
+            <p class="subtitle">1997年 長野県生まれ。Webクリエイターとしての歩みと、制作への想い。</p>
+        </div>
+        <div class="scroll-indicator">Scroll</div>
+    </section>
+
+    <main>
+        <!-- ==========================================
+             案A: Editorial Split (エディトリアル・スプリット)
+             ========================================== -->
+        <section id="demo-editorial" class="demo-section-wrapper active">
+            <div class="style-editorial">
+                <div class="editorial-grid">
+                    <div class="editorial-left">
+                        <div class="editorial-image-wrapper">
+                            <img src="./assets/img/about_workspace_setup.png" alt="Workspace Setup">
+                        </div>
+                        <div class="editorial-meta-box">
+                            <h2>上嶋 勇己</h2>
+                            <p>1997 / NAGANO, JP / WEB CREATOR</p>
+                        </div>
+                    </div>
+                    
+                    <div class="editorial-right">
+                        <div class="editorial-bio-text">
+                            <p>1997年、長野県生まれ。</p>
+                            <p>高校時代にWebクリエイター科を専攻し、Web制作の基礎を習得しました。在校中から書いたコードが形になる楽しさに没頭する日々を過ごしました。</p>
+                            <p>卒業後、知人のフリーランスエンジニアからの誘いをきっかけにプロとしてのキャリアをスタート。現場での厳しい要求に応えながら、実務における技術と知識を積み上げてきました。</p>
+                            <p>現在はこれまでの経験を武器に、お客様一人ひとりの課題に寄り添い、想いを形にする制作に励んでいます。</p>
+                        </div>
+
+                        <div>
+                            <div class="editorial-section-title">Stance</div>
+                            <div class="editorial-bio-text">
+                                <p><strong>「作って終わり」にしない。</strong></p>
+                                <p>Webサイトは公開してからが本当のスタートです。その先の運用や成果までを見据えた丁寧なヒアリングと、細部まで妥協しない制作スタンスを大切にしています。お客様のビジネスに寄り添うパートナーであることを心がけています。</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="editorial-section-title">Expertise</div>
+                            <div class="editorial-tags">
+                                <span class="editorial-tag">HTML5 & CSS3 (SASS)</span>
+                                <span class="editorial-tag">Responsive Web Design</span>
+                                <span class="editorial-tag">WordPress Integration</span>
+                                <span class="editorial-tag">JavaScript / PHP</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="editorial-section-title">Tools</div>
+                            <div class="editorial-tags">
+                                <span class="editorial-tag">VS Code</span>
+                                <span class="editorial-tag">Figma</span>
+                                <span class="editorial-tag">Git & GitHub</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="editorial-section-title">Hobby</div>
+                            <div class="editorial-bio-text">
+                                <p>Golf（長野の豊かな自然の中でプレーするのが一番のリフレッシュです）</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             案B: Glassmorphism Blobs (グラスモルフィズム・カード)
+             ========================================== -->
+        <section id="demo-glass" class="demo-section-wrapper">
+            <div class="style-glass">
+                <div class="blob-container">
+                    <div class="blur-blob blob-1"></div>
+                    <div class="blur-blob blob-2"></div>
+                </div>
+
+                <div class="glass-layout">
+                    <div class="glass-card">
+                        <h2 class="glass-title">Stance & Profile</h2>
+                        <div class="glass-bio">
+                            <p><strong>「作って終わり」にしない制作。</strong></p>
+                            <p>高校時代にWeb制作の基礎を学び、フリーランスの現場で磨き上げた確かな技術力と柔軟性で、想いを正しく伝えるWebサイトを提供します。</p>
+                            <p>公開後の運用や成果までを見据えた丁寧なヒアリングを重視し、お客様に寄り添うパートナーとして細部まで妥協せず向き合います。</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-details-container">
+                        <div class="glass-detail-item">
+                            <h3>Expertise</h3>
+                            <p>HTML5 / CSS3 (SASS) / Responsive Coding / WordPress構築 / JS / PHP</p>
+                        </div>
+                        <div class="glass-detail-item">
+                            <h3>Tools & Systems</h3>
+                            <p>VS Code / Figma / Git / GitHub / Photoshop</p>
+                        </div>
+                        <div class="glass-detail-item">
+                            <h3>Hobby</h3>
+                            <p>Golf（長野の豊かな自然の中でプレーするのがリフレッシュです）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             案C: Timeline Storyteller (タイムライン・ストーリーテラー)
+             ========================================== -->
+        <section id="demo-timeline" class="demo-section-wrapper">
+            <div class="style-timeline">
+                <div class="timeline-vertical-line"></div>
+                
+                <div class="timeline-lead-card">
+                    <p>
+                        1997年 長野県生まれ。これまでのWebクリエイターとしての経歴と、制作に込める想いのストーリーです。
+                    </p>
+                </div>
+
+                <div class="timeline-nodes-list">
+                    <!-- ノード1 -->
+                    <div class="timeline-node">
+                        <div class="timeline-pointer"></div>
+                        <div class="timeline-content-card">
+                            <span class="timeline-year-tag">START</span>
+                            <h3>Web制作との出会い</h3>
+                            <p>高校時代にWebクリエイター科を専攻し、デザインやHTML・CSSの基礎を本格的に学びました。書いたコードが画面上で実際に動く楽しさに魅了されました。</p>
+                        </div>
+                    </div>
+
+                    <!-- ノード2 -->
+                    <div class="timeline-node">
+                        <div class="timeline-pointer"></div>
+                        <div class="timeline-content-card">
+                            <span class="timeline-year-tag">CAREER START</span>
+                            <h3>実務でのプロとしての歩み</h3>
+                            <p>卒業後、知人のフリーランスエンジニアからの誘いを受けプロの世界へ。実戦の現場で厳しい要求に対応しながら、技術力と柔軟性を磨き上げました。</p>
+                        </div>
+                    </div>
+
+                    <!-- ノード3 -->
+                    <div class="timeline-node">
+                        <div class="timeline-pointer"></div>
+                        <div class="timeline-content-card">
+                            <span class="timeline-year-tag">STANCE & FUTURE</span>
+                            <h3>想いを形にし、伴走する</h3>
+                            <p>現在は「作って終わり」にしないサイト制作を信条に、丁寧なヒアリングと徹底した品質管理を大切にしながら、お客様の課題解決に寄り添い続けています。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" style="position: relative; z-index: 10;">
+        <p class="copyright">&copy; 2026 Portfolio. Built with passion.</p>
+        <div class="back-link-wrapper" style="text-align: center; margin-top: 30px;">
+            <a href="about.html" style="font-size: 0.8rem; font-weight: 700; color: #1a1a1a; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid #1a1a1a; padding-bottom: 4px;">本番のAboutページへ戻る</a>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // タブ切り替えロジック
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const sections = document.querySelectorAll('.demo-section-wrapper');
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetStyle = btn.getAttribute('data-style');
+
+                    // タブのアクティブ状態切り替え
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // セクションの切り替え（一度すべて非アクティブにしてからフェードイン）
+                    sections.forEach(sec => {
+                        sec.classList.remove('active');
+                        sec.style.display = 'none';
+                    });
+
+                    const activeSec = document.getElementById(`demo-${targetStyle}`);
+                    if (activeSec) {
+                        activeSec.style.display = 'block';
+                        // リフローを挟んでからアクティブクラスを追加（トランジション効果）
+                        setTimeout(() => {
+                            activeSec.classList.add('active');
+                        }, 50);
+                    }
+                });
+            });
+
+            // 時刻更新やその他のスクロール処理などのダミー設定（エラー回避）
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                if (header) {
+                    if (window.scrollY > 80) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

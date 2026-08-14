@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>KAMIMURA SEIKI | 上村精密工業株式会社</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F8F9FA;
+            --text-color: #2D3748;
+            --primary-color: #0F2C59;
+            --accent-color: #E2B659;
+            --light-blue: #EBF8FF;
+            --border-color: #E2E8F0;
+            --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .logo-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-en {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: var(--primary-color);
+        }
+
+        .logo-jp {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #718096;
+            margin-top: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #4A5568;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-cta {
+            background-color: var(--primary-color);
+            color: #ffffff !important;
+            padding: 10px 20px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+        }
+
+        /* Hero */
+        .hero {
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+            background-color: #0b1a30;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4) contrast(1.1);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            max-width: 800px;
+        }
+
+        .hero-content span {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: 0.02em;
+            margin-bottom: 25px;
+        }
+
+        .hero-content p {
+            font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+            font-weight: 400;
+            color: #E2E8F0;
+            margin-bottom: 35px;
+            max-width: 600px;
+        }
+
+        /* Section structure */
+        section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin-bottom: 60px;
+        }
+
+        .section-header span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            opacity: 0.7;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* Features/Services */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--primary-color);
+        }
+
+        .card-num {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: #4A5568;
+            line-height: 1.6;
+        }
+
+        /* Technology & Quality */
+        .tech-section {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 100px 5%;
+            max-width: 100%;
+        }
+
+        .tech-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .tech-text h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .tech-text p {
+            font-size: 0.95rem;
+            color: #E2E8F0;
+            margin-bottom: 20px;
+        }
+
+        .tech-image img {
+            border: 5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Company overview table */
+        .company-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        .company-table th, .company-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .company-table th {
+            width: 250px;
+            font-weight: 700;
+            color: var(--primary-color);
+            background-color: var(--light-blue);
+        }
+
+        .company-table td {
+            font-size: 0.95rem;
+        }
+
+        /* CTA */
+        .cta-section {
+            background-color: #FAFBFD;
+            text-align: center;
+            padding: 100px 5%;
+            max-width: 100%;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .cta-box {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-box h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .cta-box p {
+            font-size: 1rem;
+            color: #4A5568;
+            margin-bottom: 40px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .back-bar {
+            background-color: #ffffff;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        footer {
+            background-color: #1A202C;
+            color: #A0AEC0;
+            padding: 40px 5%;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .company-table th {
+                width: 100%;
+                display: block;
+                padding-bottom: 5px;
+            }
+
+            .company-table td {
+                display: block;
+                padding-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-group">
+            <span class="logo-en">KAMIMURA SEIKI</span>
+            <span class="logo-jp">上村精密工業株式会社</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#services">事業紹介</a></li>
+                <li><a href="#tech">技術力</a></li>
+                <li><a href="#company">企業概要</a></li>
+                <li><a href="#contact" class="nav-cta">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg">
+                <img src="../../assets/img/factory_demo.png" alt="Precision Factory Interior">
+            </div>
+            <div class="hero-content">
+                <span>PRECISION ENGINEERING</span>
+                <h1>ミクロン単位の挑戦。<br>未来のモノづくりを支える技術力。</h1>
+                <p>1980年の創業以来、最先端の精密金属加工と徹底した品質管理体制で、自動車・宇宙宇宙・半導体分野のイノベーションを支援しています。</p>
+                <a href="#services" class="btn-primary" style="background-color: var(--accent-color); color: var(--primary-color);">事業案内を見る</a>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services">
+            <div class="section-header">
+                <span>What We Do</span>
+                <h2>主要事業領域</h2>
+            </div>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="card-num">01</div>
+                    <h3>超精密金属加工</h3>
+                    <p>マシニングセンタやNC旋盤を駆使し、チタン、難削材、極小サイズ部品の削り出し加工に対応。ミクロン（1/1000mm）単位の精度保証を実現します。</p>
+                </div>
+                <div class="service-card">
+                    <div class="card-num">02</div>
+                    <h3>設計・金型開発</h3>
+                    <p>3D-CAD/CAMデータを活用した、流動解析から金型設計、試作開発。お客様の開発ステージの早期段階から課題解決に向けた提案を行います。</p>
+                </div>
+                <div class="service-card">
+                    <div class="card-num">03</div>
+                    <h3>アセンブリ・検査</h3>
+                    <p>クリーンルーム環境下での精密ユニット組立と、三次元測定機等を用いた万全の製品検査体制により、高品質な製品をお客様にお届けします。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology -->
+        <section class="tech-section">
+            <div class="tech-container">
+                <div class="tech-text">
+                    <span style="color: var(--accent-color); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.15em; display: block; margin-bottom: 15px;">Quality & Technology</span>
+                    <h2>先端機器と熟練工の<br>高度な融合。</h2>
+                    <p>上村精密工業では、最新の五軸制御マシニングセンタや超高精度測定機を積極的に導入しています。しかし、機械の性能を極限まで引き出すのは、永年培われた熟練工の「眼」と「手」の感覚です。</p>
+                    <p>テクノロジーとクラフトマンシップが交差することで、他社では追随できない難形状・高難度加工を安定して生産し、市場から高い信頼を頂いています。</p>
+                </div>
+                <div class="tech-image">
+                    <img src="../../assets/img/factory_demo.png" alt="CNC Machining">
+                </div>
+            </div>
+        </section>
+
+        <!-- Company Info -->
+        <section id="company">
+            <div class="section-header">
+                <span>About Us</span>
+                <h2>企業概要</h2>
+            </div>
+            <table class="company-table">
+                <tr>
+                    <th>会社名</th>
+                    <td>上村精密工業株式会社</td>
+                </tr>
+                <tr>
+                    <th>設立</th>
+                    <td>1980年10月</td>
+                </tr>
+                <tr>
+                    <th>資本金</th>
+                    <td>50,000,000円</td>
+                </tr>
+                <tr>
+                    <th>所在地</th>
+                    <td>長野県内（※詳細所在地はデモのため非公開）</td>
+                </tr>
+                <tr>
+                    <th>事業内容</th>
+                    <td>自動車部品、医療機器部品、半導体製造装置部品の製造販売および金型設計製作</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- CTA Contact -->
+        <section id="contact" class="cta-section">
+            <div class="cta-box">
+                <h2>技術的なご相談・お見積り依頼</h2>
+                <p>「この素材の加工は可能か」「試作の開発から相談したい」など、お気軽にお問い合わせください。弊社の技術エンジニアが最適なアプローチをご提案いたします。</p>
+                <a href="#" class="btn-primary">お問い合わせフォームへ</a>
+            </div>
+        </section>
+
+        <!-- Back to works -->
+        <section class="back-bar">
+            <a href="../../works.html#work-factory" class="btn-back">実績ページへ戻る</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 KAMIMURA SEIKI CO., LTD. All Rights Reserved. DEMO SITE.</p>
+    </footer>
+
+</body>
+</html>
