@@ -6,10 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="format-detection" content="telephone=no">
-    <title>上嶋勇己 | Webクリエイター ポートフォリオ</title>
-    <meta name="description" content="長野県を拠点に活動するWebクリエイター、上嶋勇己のポートフォリオ。Webデザイン、コーディング、WordPressの制作実績とプロフィールをご紹介します。">
+    <title>長野県のホームページ制作・Webデザイン｜上嶋勇己</title>
+    <meta name="description" content="長野県を拠点に活動するWebクリエイター上嶋勇己のポートフォリオ。ホームページ制作、Webデザイン、コーディング、WordPress構築を承ります。長野県内および全国オンラインで対応しています。">
     <link rel="canonical" href="https://www.yuuki-kamijima.site/">
     <meta name="google-site-verification" content="Vp7p3Kaow3dZbtd7nlTeVh991zKUoJOaS_bDQoq8Uzw" />
+    <meta name="theme-color" content="#d6d6ce">
+
+    <!-- ファビコン -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- OGP -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="上嶋勇己 ポートフォリオ">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:url" content="https://www.yuuki-kamijima.site/">
+    <meta property="og:title" content="長野県のホームページ制作・Webデザイン｜上嶋勇己">
+    <meta property="og:description" content="長野県を拠点に活動するWebクリエイター上嶋勇己のポートフォリオ。ホームページ制作、Webデザイン、コーディング、WordPress構築を承ります。">
+    <meta property="og:image" content="https://www.yuuki-kamijima.site/assets/img/ogp.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="上嶋勇己 - 長野県のホームページ制作・Webデザイン">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="長野県のホームページ制作・Webデザイン｜上嶋勇己">
+    <meta name="twitter:description" content="長野県を拠点に活動するWebクリエイター上嶋勇己のポートフォリオ。ホームページ制作、Webデザイン、コーディング、WordPress構築を承ります。">
+    <meta name="twitter:image" content="https://www.yuuki-kamijima.site/assets/img/ogp.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,6 +154,98 @@
             animation-play-state: running !important;
         }
     </style>
+
+    <script>
+        /* 画像の読み込みに失敗したときの差し替え。<picture>の<source>も併せて取り除かないと
+           WebPの再取得が繰り返されるため、ここでまとめて処理する。 */
+        function fallbackImage(img, src) {
+            img.onerror = null;
+            var picture = img.parentElement;
+            if (picture && picture.tagName === 'PICTURE') {
+                picture.querySelectorAll('source').forEach(function (source) {
+                    source.remove();
+                });
+            }
+            img.src = src;
+        }
+    </script>
+
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.yuuki-kamijima.site/#website",
+          "url": "https://www.yuuki-kamijima.site/",
+          "name": "上嶋勇己 ポートフォリオ",
+          "description": "長野県を拠点に活動するWebクリエイター上嶋勇己のポートフォリオサイト",
+          "inLanguage": "ja",
+          "publisher": { "@id": "https://www.yuuki-kamijima.site/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.yuuki-kamijima.site/#person",
+          "name": "上嶋 勇己",
+          "alternateName": "YUUKI KAMIJIMA",
+          "jobTitle": "Webクリエイター",
+          "url": "https://www.yuuki-kamijima.site/",
+          "image": "https://www.yuuki-kamijima.site/assets/img/about.png",
+          "description": "1997年長野県生まれ。高校でWebクリエイター科を専攻し、卒業後フリーランスとしてWeb制作のキャリアを開始。Webデザインからコーディング、WordPress構築までを一貫して手がける。",
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "長野県",
+            "addressCountry": "JP"
+          },
+          "knowsAbout": [
+            "Webデザイン",
+            "レスポンシブWebデザイン",
+            "HTML",
+            "CSS",
+            "Sass",
+            "JavaScript",
+            "WordPress",
+            "PHP",
+            "SEO"
+          ],
+          "sameAs": [
+            "https://www.instagram.com/yuuki_kamijima"
+          ]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://www.yuuki-kamijima.site/#service",
+          "name": "上嶋勇己 Web制作",
+          "url": "https://www.yuuki-kamijima.site/",
+          "image": "https://www.yuuki-kamijima.site/assets/img/ogp.jpg",
+          "description": "長野県を拠点に、ホームページ制作、Webデザイン、コーディング、WordPress構築を承ります。",
+          "provider": { "@id": "https://www.yuuki-kamijima.site/#person" },
+          "areaServed": [
+            { "@type": "AdministrativeArea", "name": "長野県" },
+            { "@type": "Country", "name": "日本" }
+          ],
+          "serviceType": [
+            "ホームページ制作",
+            "Webデザイン",
+            "コーディング",
+            "WordPress構築",
+            "ランディングページ制作"
+          ],
+          "availableLanguage": { "@type": "Language", "name": "日本語" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.yuuki-kamijima.site/#webpage",
+          "url": "https://www.yuuki-kamijima.site/",
+          "name": "長野県のホームページ制作・Webデザイン｜上嶋勇己",
+          "isPartOf": { "@id": "https://www.yuuki-kamijima.site/#website" },
+          "about": { "@id": "https://www.yuuki-kamijima.site/#person" },
+          "inLanguage": "ja"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -194,7 +310,10 @@
                 <!-- 01: 農家のホームページ -->
                 <a href="works.html#work-farmer" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/azusa.png" alt="農家のホームページ" class="pos-bottom" onerror="this.src='./assets/img/coming_soon1.png'">
+                        <picture>
+                            <source srcset="./assets/img/azusa.webp" type="image/webp">
+                            <img src="./assets/img/azusa.png" alt="農家のホームページ" class="pos-bottom" width="1108" height="1477" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon1.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>農家のホームページ</h3>
                             <p>Web Design & Coding</p>
@@ -205,7 +324,10 @@
                 <!-- 02: ブリーダーのホームページ -->
                 <a href="works.html#work-breeder" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/wah.png" alt="ブリーダーのホームページ" onerror="this.src='./assets/img/coming_soon2.png'">
+                        <picture>
+                            <source srcset="./assets/img/wah.webp" type="image/webp">
+                            <img src="./assets/img/wah.png" alt="ブリーダーのホームページ" width="1477" height="1108" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon2.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>ブリーダーのホームページ</h3>
                             <p>Web Design & WordPress</p>
@@ -216,7 +338,10 @@
                 <!-- 03: カフェのホームページ -->
                 <a href="works.html#work-cafe" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/waffle_menu.png" alt="カフェのホームページ" onerror="this.src='./assets/img/coming_soon3.png'">
+                        <picture>
+                            <source srcset="./assets/img/waffle_menu.webp" type="image/webp">
+                            <img src="./assets/img/waffle_menu.png" alt="カフェのホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon3.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>カフェのホームページ</h3>
                             <p>Web Design & Instagram Integration</p>
@@ -227,7 +352,10 @@
                 <!-- 04: 工場のホームページ -->
                 <a href="works.html#work-factory" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/factory_demo.png" alt="工場のホームページ" onerror="this.src='./assets/img/coming_soon4.png'">
+                        <picture>
+                            <source srcset="./assets/img/factory_demo.webp" type="image/webp">
+                            <img src="./assets/img/factory_demo.png" alt="工場のホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon4.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>工場のホームページ</h3>
                             <p>Web Design & Coding</p>
@@ -238,7 +366,10 @@
                 <!-- 05: 美容室のホームページ -->
                 <a href="works.html#work-hairsalon" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/hair_salon_demo.png" alt="美容室のホームページ" onerror="this.src='./assets/img/coming_soon1.png'">
+                        <picture>
+                            <source srcset="./assets/img/hair_salon_demo.webp" type="image/webp">
+                            <img src="./assets/img/hair_salon_demo.png" alt="美容室のホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon1.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>美容室のホームページ</h3>
                             <p>Web Design & Smooth Animation</p>
@@ -249,7 +380,10 @@
                 <!-- 06: 美容クリニックのホームページ -->
                 <a href="works.html#work-estheticsalon" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/esthetic_salon_demo.png" alt="美容クリニックのホームページ" onerror="this.src='./assets/img/coming_soon2.png'">
+                        <picture>
+                            <source srcset="./assets/img/esthetic_salon_demo.webp" type="image/webp">
+                            <img src="./assets/img/esthetic_salon_demo.png" alt="美容クリニックのホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon2.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>美容クリニックのホームページ</h3>
                             <p>Web Design & Coding</p>
@@ -260,7 +394,10 @@
                 <!-- 07: LPの紹介ページ -->
                 <a href="works.html#work-lp" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/lp_demo.png" alt="Webスクールの紹介LP" onerror="this.src='./assets/img/coming_soon3.png'">
+                        <picture>
+                            <source srcset="./assets/img/lp_demo.webp" type="image/webp">
+                            <img src="./assets/img/lp_demo.png" alt="Webスクールの紹介LP" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon3.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>Webスクールの紹介LP</h3>
                             <p>Landing Page Design & Coding</p>
@@ -273,7 +410,10 @@
                 <!--
                 <a href="works.html#work-new" class="work-item reveal">
                     <div class="image-wrapper">
-                        <img src="./assets/img/coming_soon4.png" alt="新規プロジェクト" onerror="this.src='./assets/img/coming_soon4.png'">
+                        <picture>
+                            <source srcset="./assets/img/coming_soon4.webp" type="image/webp">
+                            <img src="./assets/img/coming_soon4.png" alt="新規プロジェクト" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon4.png')">
+                        </picture>
                         <div class="hover-mask">
                             <h3>新プロジェクト</h3>
                             <p>Web Design & Coding</p>

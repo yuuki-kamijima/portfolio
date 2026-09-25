@@ -5,9 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>制作実績 | 上嶋勇己 ポートフォリオ</title>
-    <meta name="description" content="上嶋勇己が手がけたWebサイトの制作実績をご紹介します。Webデザイン、コーディング、WordPress構築などの担当内容と使用技術を掲載しています。">
+    <title>制作実績｜長野県のホームページ制作 上嶋勇己</title>
+    <meta name="description" content="長野県のWebクリエイター上嶋勇己が手がけたホームページの制作実績をご紹介します。飲食店、美容室、工場などのWebデザイン、コーディング、WordPress構築の担当内容と使用技術を掲載しています。">
     <link rel="canonical" href="https://www.yuuki-kamijima.site/works.html">
+    <meta name="theme-color" content="#d6d6ce">
+
+    <!-- ファビコン -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- OGP -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="上嶋勇己 ポートフォリオ">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:url" content="https://www.yuuki-kamijima.site/works.html">
+    <meta property="og:title" content="制作実績｜長野県のホームページ制作 上嶋勇己">
+    <meta property="og:description" content="長野県のWebクリエイター上嶋勇己が手がけたホームページの制作実績をご紹介します。Webデザイン、コーディング、WordPress構築の担当内容と使用技術を掲載しています。">
+    <meta property="og:image" content="https://www.yuuki-kamijima.site/assets/img/ogp.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="上嶋勇己 - 長野県のホームページ制作・Webデザイン">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="制作実績｜長野県のホームページ制作 上嶋勇己">
+    <meta name="twitter:description" content="長野県のWebクリエイター上嶋勇己が手がけたホームページの制作実績をご紹介します。Webデザイン、コーディング、WordPress構築の担当内容と使用技術を掲載しています。">
+    <meta name="twitter:image" content="https://www.yuuki-kamijima.site/assets/img/ogp.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -68,7 +93,10 @@
             left: 0;
             width: 100%;
             height: 100%;
+            /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
             background-image: url("./assets/img/macbook.png");
+            background-image: image-set(url("./assets/img/macbook.webp") type("image/webp"),
+                                        url("./assets/img/macbook.png") type("image/png"));
             background-size: cover;
             background-position: center;
             filter: blur(12px) grayscale(100%) brightness(0.95);
@@ -140,6 +168,152 @@
             opacity: 0;
         }
     </style>
+
+    <script>
+        /* 画像の読み込みに失敗したときの差し替え。<picture>の<source>も併せて取り除かないと
+           WebPの再取得が繰り返されるため、ここでまとめて処理する。 */
+        function fallbackImage(img, src) {
+            img.onerror = null;
+            var picture = img.parentElement;
+            if (picture && picture.tagName === 'PICTURE') {
+                picture.querySelectorAll('source').forEach(function (source) {
+                    source.remove();
+                });
+            }
+            img.src = src;
+        }
+    </script>
+
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "https://www.yuuki-kamijima.site/works.html#webpage",
+          "url": "https://www.yuuki-kamijima.site/works.html",
+          "name": "制作実績｜長野県のホームページ制作 上嶋勇己",
+          "description": "長野県のWebクリエイター上嶋勇己が手がけたホームページの制作実績。Webデザイン、コーディング、WordPress構築の担当内容と使用技術を掲載しています。",
+          "inLanguage": "ja",
+          "isPartOf": { "@id": "https://www.yuuki-kamijima.site/#website" },
+          "about": { "@id": "https://www.yuuki-kamijima.site/#person" },
+          "mainEntity": { "@id": "https://www.yuuki-kamijima.site/works.html#worklist" }
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://www.yuuki-kamijima.site/works.html#worklist",
+          "name": "制作実績一覧",
+          "numberOfItems": 7,
+          "itemListOrder": "https://schema.org/ItemListOrderAscending",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "農家のホームページ",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-farmer",
+                "image": "https://www.yuuki-kamijima.site/assets/img/azusa.png",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "Webデザイン, コーディング"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "ブリーダーのホームページ",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-breeder",
+                "image": "https://www.yuuki-kamijima.site/assets/img/wah.png",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "Webデザイン, WordPress"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "ワッフル＆スイーツカフェのホームページ",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-cafe",
+                "image": "https://www.yuuki-kamijima.site/assets/img/waffle_menu.png",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "Webデザイン, Instagram連携"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "工場のホームページ",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-factory",
+                "image": "https://www.yuuki-kamijima.site/assets/img/factory_demo.png",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "Webデザイン, コーディング"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "美容室のホームページ",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-hairsalon",
+                "image": "https://www.yuuki-kamijima.site/assets/img/hair_salon_demo.png",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "Webデザイン, アニメーション"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "美容クリニックのホームページ",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-estheticsalon",
+                "image": "https://www.yuuki-kamijima.site/assets/img/esthetic_salon_demo.png",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "Webデザイン, コーディング"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 7,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Webスクールの紹介ランディングページ",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-lp",
+                "image": "https://www.yuuki-kamijima.site/assets/img/lp_demo.png",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "ランディングページ, Webデザイン"
+              }
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.yuuki-kamijima.site/works.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "ホーム",
+              "item": "https://www.yuuki-kamijima.site/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "制作実績",
+              "item": "https://www.yuuki-kamijima.site/works.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -190,7 +364,10 @@
                 <!-- 01: 農家のホームページ -->
                 <div class="work-item reveal" id="work-farmer">
                     <div class="image-wrapper">
-                        <img src="./assets/img/azusa.png" alt="農家のホームページ" class="pos-bottom" onerror="this.src='./assets/img/coming_soon1.png'">
+                        <picture>
+                            <source srcset="./assets/img/azusa.webp" type="image/webp">
+                            <img src="./assets/img/azusa.png" alt="農家のホームページ" class="pos-bottom" width="1108" height="1477" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon1.png')">
+                        </picture>
                     </div>
                     <div class="work-info">
                         <h3>農家のホームページ</h3>
@@ -224,7 +401,10 @@
                 <!-- 02: ブリーダー the homepage -->
                 <div class="work-item reveal" id="work-breeder">
                     <div class="image-wrapper">
-                        <img src="./assets/img/wah.png" alt="ブリーダーのホームページ" onerror="this.src='./assets/img/coming_soon2.png'">
+                        <picture>
+                            <source srcset="./assets/img/wah.webp" type="image/webp">
+                            <img src="./assets/img/wah.png" alt="ブリーダーのホームページ" width="1477" height="1108" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon2.png')">
+                        </picture>
                     </div>
                     <div class="work-info">
                         <h3>ブリーダーのホームページ</h3>
@@ -244,13 +424,17 @@
                             </div>
                             <div class="detail-row">
                                 <span class="detail-label">制作概要</span>
-                                <span class="detail-value">子犬たちの健康や愛情豊かな育成環境が伝わるよう、温かみと信頼感のあるトーン＆マナーでデザイン。WordPressによるブログ機能や子犬情報の更新機能も実装しています。（※現在掲載交渉中につき、URLの公開を一時的に控えております）</span>
+                                <span class="detail-value">子犬たちの健康や愛情豊かな育成環境が伝わるよう、温かみと信頼感のあるトーン＆マナーでデザイン。既存テンプレートのカスタマイズではなく、WordPressテーマをゼロから自作し、ブログ機能や子犬情報の更新機能も実装しています。</span>
                             </div>
                         </div>
                         <div class="work-link-wrapper">
-                            <span class="work-link-btn" style="border-bottom-color: rgba(26, 26, 26, 0.15); color: #8c7a70; cursor: not-allowed;">
-                                <span>現在掲載交渉中</span>
-                            </span>
+                            <a href="https://white-animal-home.tech" target="_blank" rel="noopener noreferrer" class="work-link-btn">
+                                <span>Webサイトを見る</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -258,7 +442,10 @@
                 <!-- 03: カフェの実績 -->
                 <div class="work-item reveal" id="work-cafe">
                     <div class="image-wrapper">
-                        <img src="./assets/img/waffle_menu.png" alt="カフェのホームページ" onerror="this.src='./assets/img/coming_soon3.png'">
+                        <picture>
+                            <source srcset="./assets/img/waffle_menu.webp" type="image/webp">
+                            <img src="./assets/img/waffle_menu.png" alt="カフェのホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon3.png')">
+                        </picture>
                     </div>
                     <div class="work-info">
                         <h3>ワッフル＆スイーツカフェのHP</h3>
@@ -296,7 +483,10 @@
                 <!-- 04: 工場の実績 -->
                 <div class="work-item reveal" id="work-factory">
                     <div class="image-wrapper">
-                        <img src="./assets/img/factory_demo.png" alt="工場のホームページ" onerror="this.src='./assets/img/coming_soon4.png'">
+                        <picture>
+                            <source srcset="./assets/img/factory_demo.webp" type="image/webp">
+                            <img src="./assets/img/factory_demo.png" alt="工場のホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon4.png')">
+                        </picture>
                     </div>
                     <div class="work-info">
                         <h3>工場のホームページ</h3>
@@ -334,7 +524,10 @@
                 <!-- 05: 美容室の実績 -->
                 <div class="work-item reveal" id="work-hairsalon">
                     <div class="image-wrapper">
-                        <img src="./assets/img/hair_salon_demo.png" alt="美容室のホームページ" onerror="this.src='./assets/img/coming_soon1.png'">
+                        <picture>
+                            <source srcset="./assets/img/hair_salon_demo.webp" type="image/webp">
+                            <img src="./assets/img/hair_salon_demo.png" alt="美容室のホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon1.png')">
+                        </picture>
                     </div>
                     <div class="work-info">
                         <h3>美容室のホームページ</h3>
@@ -372,7 +565,10 @@
                 <!-- 06: エステの実績 -->
                 <div class="work-item reveal" id="work-estheticsalon">
                     <div class="image-wrapper">
-                        <img src="./assets/img/esthetic_salon_demo.png" alt="美容クリニックのホームページ" onerror="this.src='./assets/img/coming_soon2.png'">
+                        <picture>
+                            <source srcset="./assets/img/esthetic_salon_demo.webp" type="image/webp">
+                            <img src="./assets/img/esthetic_salon_demo.png" alt="美容クリニックのホームページ" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon2.png')">
+                        </picture>
                     </div>
                     <div class="work-info">
                         <h3>美容クリニックのホームページ</h3>
@@ -410,7 +606,10 @@
                 <!-- 07: LPの実績 -->
                 <div class="work-item reveal" id="work-lp">
                     <div class="image-wrapper">
-                        <img src="./assets/img/lp_demo.png" alt="WebデザインスクールLP" onerror="this.src='./assets/img/coming_soon3.png'">
+                        <picture>
+                            <source srcset="./assets/img/lp_demo.webp" type="image/webp">
+                            <img src="./assets/img/lp_demo.png" alt="WebデザインスクールLP" width="1024" height="1024" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/coming_soon3.png')">
+                        </picture>
                     </div>
                     <div class="work-info">
                         <h3>Webスクールの紹介LP</h3>

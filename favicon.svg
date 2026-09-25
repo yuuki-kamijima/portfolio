@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="YUUKI KAMIJIMA">
+  <rect width="64" height="64" rx="14" fill="#1a1a1a"/>
+  <path d="M15 17 L32 36 L49 17 M32 36 L32 49"
+        fill="none" stroke="#d6d6ce" stroke-width="8"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

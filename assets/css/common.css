@@ -67,6 +67,12 @@ img {
   display: block;
 }
 
+/* WebPフォールバック用の<picture>がレイアウトへ影響しないようにする。
+   これにより<img>は<picture>の親要素の直接の子として扱われる。 */
+picture {
+  display: contents;
+}
+
 @font-face {
   font-family: "Roboto";
   src: url(/assets/font/Roboto-Bold.ttf) format("tff");
@@ -267,22 +273,6 @@ header nav ul li a {
   gap: 4px;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-header.header-capsule nav ul li a.active-link {
-  background: rgba(26, 26, 26, 0.06);
-  border: 1px solid rgba(26, 26, 26, 0.1);
-  border-radius: 99px;
-  padding: 6px 16px;
-  margin: -6px -16px;
-  color: #1a1a1a;
-  font-weight: 700;
-}
-@media only screen and (max-width: 767px) {
-  header.header-capsule nav ul li a.active-link {
-    background: rgba(26, 26, 26, 0.08);
-    padding: 10px 24px;
-    margin: 0;
-  }
-}
 @media only screen and (min-width: 768px) {
   header nav ul li a {
     font-size: 10px;
@@ -362,6 +352,22 @@ header.nav-open .hamburger span:nth-child(2) {
 }
 header.nav-open .hamburger span:nth-child(3) {
   transform: translateY(-9px) rotate(-45deg);
+}
+header.header-capsule nav ul li a.active-link {
+  background: rgba(26, 26, 26, 0.06);
+  border: 1px solid rgba(26, 26, 26, 0.1);
+  border-radius: 99px;
+  padding: 6px 16px;
+  margin: -6px -16px;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+@media only screen and (max-width: 767px) {
+  header.header-capsule nav ul li a.active-link {
+    background: rgba(26, 26, 26, 0.08);
+    padding: 10px 24px;
+    margin: 0;
+  }
 }
 
 @font-face {
@@ -460,7 +466,9 @@ header.nav-open .hamburger span:nth-child(3) {
   animation-delay: 0.5s; /* テキストの表示開始から少し遅らせてじわっと現れる */
 }
 .hero .index-hero-bg {
+  /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
   background-image: url("../img/nagano-mountain.png");
+  background-image: image-set(url("../img/nagano-mountain.webp") type("image/webp"), url("../img/nagano-mountain.png") type("image/png"));
   background-position: center bottom; /* 山並みは下基準 */
   z-index: 2; /* 文字の上に重ねる */
   mask-image: linear-gradient(to top, rgb(0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%);
@@ -477,11 +485,15 @@ header.nav-open .hamburger span:nth-child(3) {
   text-shadow: none; /* 黒文字にするため影は不要 */
 }
 .hero .about-hero-bg {
+  /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
   background-image: url("../img/IMG_8299.jpeg");
+  background-image: image-set(url("../img/IMG_8299.webp") type("image/webp"), url("../img/IMG_8299.jpeg") type("image/jpeg"));
   background-position: 80% 15%; /* 右上の顔と猫ちゃんが収まるように右上寄りに配置 */
 }
 .hero .works-hero-bg {
+  /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
   background-image: url("../img/macbook.png");
+  background-image: image-set(url("../img/macbook.webp") type("image/webp"), url("../img/macbook.png") type("image/png"));
   background-position: center; /* MacBookは中央基準 */
 }
 

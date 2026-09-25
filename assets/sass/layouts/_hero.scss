@@ -98,7 +98,12 @@
 
   /* indexページの背景（長野の山） - レイヤーオーバーラップ特殊設定 */
   .index-hero-bg {
+    /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
     background-image: url('../img/nagano-mountain.png');
+    background-image: image-set(
+      url('../img/nagano-mountain.webp') type('image/webp'),
+      url('../img/nagano-mountain.png') type('image/png')
+    );
     background-position: center bottom; /* 山並みは下基準 */
     z-index: 2; /* 文字の上に重ねる */
     
@@ -122,13 +127,23 @@
 
   /* Aboutページの背景（ご自身＋愛猫） */
   .about-hero-bg {
+    /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
     background-image: url('../img/IMG_8299.jpeg');
+    background-image: image-set(
+      url('../img/IMG_8299.webp') type('image/webp'),
+      url('../img/IMG_8299.jpeg') type('image/jpeg')
+    );
     background-position: 80% 15%; /* 右上の顔と猫ちゃんが収まるように右上寄りに配置 */
   }
 
   /* Worksページの背景（MacBook） */
   .works-hero-bg {
+    /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
     background-image: url('../img/macbook.png');
+    background-image: image-set(
+      url('../img/macbook.webp') type('image/webp'),
+      url('../img/macbook.png') type('image/png')
+    );
     background-position: center; /* MacBookは中央基準 */
   }
 }

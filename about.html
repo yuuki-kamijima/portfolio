@@ -5,9 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>プロフィール | 上嶋勇己 ポートフォリオ</title>
-    <meta name="description" content="Webクリエイター上嶋勇己のプロフィール。これまでの歩み、Web制作への姿勢、対応領域、使用ツールをご紹介します。">
+    <title>プロフィール｜長野県のWebクリエイター 上嶋勇己</title>
+    <meta name="description" content="長野県を拠点に活動するWebクリエイター上嶋勇己のプロフィール。これまでの歩み、Web制作への姿勢、対応領域、使用ツールをご紹介します。">
     <link rel="canonical" href="https://www.yuuki-kamijima.site/about.html">
+    <meta name="theme-color" content="#d6d6ce">
+
+    <!-- ファビコン -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- OGP -->
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="上嶋勇己 ポートフォリオ">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:url" content="https://www.yuuki-kamijima.site/about.html">
+    <meta property="og:title" content="プロフィール｜長野県のWebクリエイター 上嶋勇己">
+    <meta property="og:description" content="長野県を拠点に活動するWebクリエイター上嶋勇己のプロフィール。これまでの歩み、Web制作への姿勢、対応領域、使用ツールをご紹介します。">
+    <meta property="og:image" content="https://www.yuuki-kamijima.site/assets/img/ogp.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="上嶋勇己 - 長野県のホームページ制作・Webデザイン">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="プロフィール｜長野県のWebクリエイター 上嶋勇己">
+    <meta name="twitter:description" content="長野県を拠点に活動するWebクリエイター上嶋勇己のプロフィール。これまでの歩み、Web制作への姿勢、対応領域、使用ツールをご紹介します。">
+    <meta name="twitter:image" content="https://www.yuuki-kamijima.site/assets/img/ogp.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -70,7 +95,10 @@
             left: 0;
             width: 100%;
             height: 100%;
+            /* 1行目は image-set() 非対応ブラウザ向けのフォールバック */
             background-image: url("./assets/img/IMG_8299.jpeg");
+            background-image: image-set(url("./assets/img/IMG_8299.webp") type("image/webp"),
+                                        url("./assets/img/IMG_8299.jpeg") type("image/jpeg"));
             background-size: cover;
             background-position: 80% 15%; /* 猫ちゃんと顔が収まる位置 */
             filter: blur(12px) grayscale(100%) brightness(0.95);
@@ -278,6 +306,91 @@
             }
         }
     </style>
+
+    <script>
+        /* 画像の読み込みに失敗したときの差し替え。<picture>の<source>も併せて取り除かないと
+           WebPの再取得が繰り返されるため、ここでまとめて処理する。 */
+        function fallbackImage(img, src) {
+            img.onerror = null;
+            var picture = img.parentElement;
+            if (picture && picture.tagName === 'PICTURE') {
+                picture.querySelectorAll('source').forEach(function (source) {
+                    source.remove();
+                });
+            }
+            img.src = src;
+        }
+    </script>
+
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": "https://www.yuuki-kamijima.site/about.html#webpage",
+          "url": "https://www.yuuki-kamijima.site/about.html",
+          "name": "プロフィール｜長野県のWebクリエイター 上嶋勇己",
+          "description": "長野県を拠点に活動するWebクリエイター上嶋勇己のプロフィール。これまでの歩み、Web制作への姿勢、対応領域、使用ツールをご紹介します。",
+          "inLanguage": "ja",
+          "isPartOf": { "@id": "https://www.yuuki-kamijima.site/#website" },
+          "mainEntity": { "@id": "https://www.yuuki-kamijima.site/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.yuuki-kamijima.site/#person",
+          "name": "上嶋 勇己",
+          "alternateName": "YUUKI KAMIJIMA",
+          "jobTitle": "Webクリエイター",
+          "url": "https://www.yuuki-kamijima.site/",
+          "mainEntityOfPage": "https://www.yuuki-kamijima.site/about.html",
+          "image": "https://www.yuuki-kamijima.site/assets/img/about.png",
+          "description": "1997年長野県生まれ。高校でWebクリエイター科を専攻しWeb制作の基礎を習得。卒業後、フリーランスエンジニアとの協業をきっかけにプロとしてのキャリアを開始した。Webデザインからコーディング、WordPress構築までを一貫して手がける。",
+          "birthPlace": { "@type": "Place", "name": "長野県" },
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "長野県",
+            "addressCountry": "JP"
+          },
+          "knowsAbout": [
+            "Webデザイン",
+            "レスポンシブWebデザイン",
+            "HTML",
+            "CSS",
+            "Sass",
+            "JavaScript",
+            "WordPress",
+            "PHP",
+            "SEO",
+            "Figma",
+            "Git"
+          ],
+          "sameAs": [
+            "https://www.instagram.com/yuuki_kamijima"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.yuuki-kamijima.site/about.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "ホーム",
+              "item": "https://www.yuuki-kamijima.site/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "プロフィール",
+              "item": "https://www.yuuki-kamijima.site/about.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -328,7 +441,10 @@
             <div class="editorial-grid">
                 <div class="editorial-left">
                     <div class="editorial-image-wrapper">
-                        <img src="./assets/img/about.png" alt="上嶋 勇己" onerror="this.src='./assets/img/IMG_8299.jpeg'">
+                        <picture>
+                            <source srcset="./assets/img/about.webp" type="image/webp">
+                            <img src="./assets/img/about.png" alt="Webクリエイター 上嶋勇己と愛猫" width="1448" height="1086" loading="lazy" decoding="async" onerror="fallbackImage(this,'./assets/img/IMG_8299.jpeg')">
+                        </picture>
                     </div>
                     <div class="editorial-meta-box">
                         <h2>上嶋 勇己</h2>
