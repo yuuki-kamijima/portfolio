@@ -204,7 +204,7 @@
           "@type": "ItemList",
           "@id": "https://www.yuuki-kamijima.site/works.html#worklist",
           "name": "制作実績一覧",
-          "numberOfItems": 7,
+          "numberOfItems": 8,
           "itemListOrder": "https://schema.org/ItemListOrderAscending",
           "itemListElement": [
             {
@@ -289,6 +289,18 @@
                 "image": "https://www.yuuki-kamijima.site/assets/img/lp_demo.png",
                 "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
                 "keywords": "ランディングページ, Webデザイン"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 8,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "ポーカールーム DICE",
+                "url": "https://www.yuuki-kamijima.site/works.html#work-dice",
+                "image": "https://www.yuuki-kamijima.site/assets/img/dice_tournament_clock.webp",
+                "creator": { "@id": "https://www.yuuki-kamijima.site/#person" },
+                "keywords": "Webデザイン, フロントエンド開発, バックエンド開発, システム設計"
               }
             }
           ]
@@ -635,6 +647,65 @@
                         <div class="work-link-wrapper">
                             <a href="./demo/lp/index.html" target="_blank" rel="noopener noreferrer" class="work-link-btn">
                                 <span>Webサイトを見る (Demo)</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 08: ポーカールーム DICE -->
+                <div class="work-item reveal" id="work-dice">
+                    <div class="image-wrapper">
+                        <img src="./assets/img/dice_tournament_clock.webp" alt="ポーカールームDICE トーナメントクロック画面" width="1600" height="689" loading="lazy" decoding="async">
+                    </div>
+                    <div class="work-info">
+                        <h3>ポーカールーム DICE</h3>
+                        <p>Web System Development</p>
+                        <div class="work-details">
+                            <div class="detail-row">
+                                <span class="detail-label">カテゴリ</span>
+                                <span class="detail-value">ポーカールーム (公式サイト＋店舗運営システム)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">担当作業</span>
+                                <span class="detail-value">Webデザイン / フロントエンド・バックエンド開発 / 会員管理・伝票管理・トーナメントクロック等のシステム設計</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">使用技術</span>
+                                <span class="detail-value">Node.js (標準httpモジュール、フレームワーク不使用) / Server-Sent Events (リアルタイム同期) / nodemailer / PM2 / nginx</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">制作概要</span>
+                                <span class="detail-value">公開LP、会員向けデジタル会員証（Dポイント管理）、店舗の伝票管理システム、トーナメントクロックを1つのNodeサーバーで配信する、店舗運営を支えるフルスタックなシステムです。混雑状況やクロックの進行はServer-Sent Eventsによりリアルタイムに同期します。</span>
+                            </div>
+                        </div>
+                        <div class="work-gallery">
+                            <p class="work-gallery-title">店舗運営システム画面（一部）</p>
+                            <div class="work-gallery-grid">
+                                <figure class="work-gallery-item">
+                                    <img src="./assets/img/dice_slip_menu.webp" alt="伝票管理システムの注文メニュー画面" width="1600" height="856" loading="lazy" decoding="async">
+                                    <figcaption>伝票管理</figcaption>
+                                </figure>
+                                <figure class="work-gallery-item">
+                                    <img src="./assets/img/dice_admin_dashboard.webp" alt="管理者ダッシュボード画面" width="1600" height="856" loading="lazy" decoding="async">
+                                    <figcaption>管理ダッシュボード</figcaption>
+                                </figure>
+                                <figure class="work-gallery-item">
+                                    <img src="./assets/img/dice_member_card.webp" alt="会員ポータルのデジタル会員証画面" width="1600" height="856" loading="lazy" decoding="async">
+                                    <figcaption>会員デジタル会員証</figcaption>
+                                </figure>
+                                <figure class="work-gallery-item">
+                                    <img src="./assets/img/dice_member_analytics.webp" alt="会員ポータルのプレイヤー分析画面" width="1600" height="856" loading="lazy" decoding="async">
+                                    <figcaption>収支分析</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="work-link-wrapper">
+                            <a href="https://dice-poker.site/" target="_blank" rel="noopener noreferrer" class="work-link-btn">
+                                <span>Webサイトを見る</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="7" y1="17" x2="17" y2="7"></line>
                                     <polyline points="7 7 17 7 17 17"></polyline>

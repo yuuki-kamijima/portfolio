@@ -192,9 +192,55 @@ section {
       }
     }
     
+    .work-gallery {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(26, 26, 26, 0.1);
+
+      .work-gallery-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: $text-color;
+        letter-spacing: 0.05em;
+        margin-bottom: 10px;
+      }
+
+      .work-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+
+        @include res($res767) {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .work-gallery-item {
+        margin: 0;
+        background: rgba(26, 26, 26, 0.03);
+        border: 1px solid rgba(26, 26, 26, 0.08);
+        overflow: hidden;
+
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+          aspect-ratio: 16 / 10;
+          object-fit: cover;
+        }
+
+        figcaption {
+          font-size: 0.7rem;
+          color: $text-dim-color;
+          padding: 6px 8px;
+          letter-spacing: 0.03em;
+        }
+      }
+    }
+
     .work-link-wrapper {
       margin-top: 20px;
-      
+
       .work-link-btn {
         display: inline-flex;
         align-items: center;

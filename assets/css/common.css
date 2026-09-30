@@ -708,6 +708,47 @@ section .section-title {
 .work-item .work-info .work-details .detail-row .detail-value {
   color: #4a4a4a;
 }
+.work-item .work-info .work-gallery {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(26, 26, 26, 0.1);
+}
+.work-item .work-info .work-gallery .work-gallery-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.work-item .work-info .work-gallery .work-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media only screen and (max-width: 767px) {
+  .work-item .work-info .work-gallery .work-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.work-item .work-info .work-gallery .work-gallery-item {
+  margin: 0;
+  background: rgba(26, 26, 26, 0.03);
+  border: 1px solid rgba(26, 26, 26, 0.08);
+  overflow: hidden;
+}
+.work-item .work-info .work-gallery .work-gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+}
+.work-item .work-info .work-gallery .work-gallery-item figcaption {
+  font-size: 0.7rem;
+  color: #4a4a4a;
+  padding: 6px 8px;
+  letter-spacing: 0.03em;
+}
 .work-item .work-info .work-link-wrapper {
   margin-top: 20px;
 }
