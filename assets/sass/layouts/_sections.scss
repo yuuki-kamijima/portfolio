@@ -198,11 +198,43 @@ section {
       border-top: 1px solid rgba(26, 26, 26, 0.1);
 
       .work-gallery-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
         font-size: 0.75rem;
         font-weight: 700;
         color: $text-color;
         letter-spacing: 0.05em;
-        margin-bottom: 10px;
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+        transition: $transition-fast;
+
+        &::-webkit-details-marker {
+          display: none;
+        }
+
+        &:hover {
+          color: $text-dim-color;
+        }
+      }
+
+      .work-gallery-arrow {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+      }
+
+      &[open] {
+        .work-gallery-title {
+          margin-bottom: 10px;
+        }
+
+        .work-gallery-arrow {
+          transform: rotate(180deg);
+        }
       }
 
       .work-gallery-grid {

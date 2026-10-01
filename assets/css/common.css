@@ -714,11 +714,36 @@ section .section-title {
   border-top: 1px solid rgba(26, 26, 26, 0.1);
 }
 .work-item .work-info .work-gallery .work-gallery-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   font-size: 0.75rem;
   font-weight: 700;
   color: #1a1a1a;
   letter-spacing: 0.05em;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+.work-item .work-info .work-gallery .work-gallery-title::-webkit-details-marker {
+  display: none;
+}
+.work-item .work-info .work-gallery .work-gallery-title:hover {
+  color: #4a4a4a;
+}
+.work-item .work-info .work-gallery .work-gallery-arrow {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.work-item .work-info .work-gallery[open] .work-gallery-title {
   margin-bottom: 10px;
+}
+.work-item .work-info .work-gallery[open] .work-gallery-arrow {
+  transform: rotate(180deg);
 }
 .work-item .work-info .work-gallery .work-gallery-grid {
   display: grid;
